@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{loyaut/plantilla}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>welcome page</title>
 </head>
 <body>
-    <h1>Hello world public</h1>
+
+    <section class="container mb-4" layout:fragment="content">
+        <div th:if="${param.logout}">
+            <p class="alert alert-success">¡Sesión cerrada correctamente!</p>
+        </div>
+        <h1>Hello world public</h1>
+    </section>
 </body>
 </html>
