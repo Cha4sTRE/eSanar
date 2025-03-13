@@ -8,11 +8,39 @@
 </head>
 <body>
 
-    <section class="container mb-4" layout:fragment="content">
-        <h1>Hello Enf</h1>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-        </form>
+    <section layout:fragment="content">
+        <h2>Pacientes</h2>
+        <div class="col-md-7">
+            <div class="col-md-3 mb-4">
+                <a th:href="@{paciente/nuevo}">
+                    <button class="btn" style="background-color: lightgreen">Nuevo Paciente</button>
+                </a>
+            </div>
+            <div class="tabla">
+                <table class="table table-striped">
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>cedula</th>
+                        <th>Telefono</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="paciente:${pacientes}">
+                        <td th:text="${paciente.id}"></td>
+                        <td th:text="${paciente.nombre}"></td>
+                        <td th:text="${paciente.apellido}"></td>
+                        <td th:text="${paciente.correo}"></td>
+                        <td th:text="${paciente.identificacion}"></td>
+                        <th th:text="${paciente.telefono}"></th>
+                        <td><a th:href="@{paciente/}+@{${paciente.nombre}(id=${paciente.id})}"><i class="bi bi-pencil-square"></i></a></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
     </section>
 
 </body>
