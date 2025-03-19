@@ -24,6 +24,10 @@ public class UserEntity {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "email",length = 50)
+    private String email;
+    @Column(name = "telefono")
+    private Long telefono;
 
     @Column(name = "is_enabled")
     private boolean isEnabled;

@@ -1,4 +1,4 @@
-package cj.esanar.contrlller;
+package cj.esanar.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ public class AuthController {
     @PreAuthorize("permitAll()")
     @GetMapping("/login")
     public String loginPage() {
-        return "login"; // Thymeleaf buscará templates/login.html
+        return "login";
     }
 
 }

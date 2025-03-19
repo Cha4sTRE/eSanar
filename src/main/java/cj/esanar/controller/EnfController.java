@@ -1,4 +1,4 @@
-package cj.esanar.contrlller;
+package cj.esanar.controller;
 
 
 import cj.esanar.persistence.entity.PacienteEntity;
@@ -49,7 +49,6 @@ public class EnfController {
 
         PacienteEntity pacienteEspecifico = pacienteServiceImpl.findPacienteById(paciente);
         model.addAttribute("paciente", pacienteEspecifico);
-        model.addAttribute("id",paciente.getId());
         return "enf/paciente-form";
     }
 

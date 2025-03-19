@@ -4,6 +4,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title layout:title-pattern="$CONTENT_TITLE"></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -12,32 +14,36 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/LogoImageWEB.png}" style="width: 70px" alt="logo"></a>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav d-fex align-items-center align-self-center">
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <form class="container-fluid justify-content-start"  th:action="@{/logout}" method="post">
-                            <button type="submit" class="btn btn-danger">Cerrar sesión</button>
-                        </form>
-                    </li>
-                    <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{/login}" tabindex="-1" aria-disabled="true">
-                            <button class="btn" style="background-color: lightgreen">login</button>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container-md">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/images/LogoImageWEB.png}" style="width: 70px" alt="logo">
+        </a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav d-fex align-items-center align-self-center">
+                <li class="nav-item" sec:authorize="hasRole('ENF')">
+                    <a th:href="@{/enf/}">
+                        <button type="submit" class="btn" style="background-color: lightgreen">Pacientes</button>
+                    </a>
+
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form class="container-fluid justify-content-start" th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+                    </form>
+                </li>
+
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <section layout:fragment="content" class="container mb-4">
+<section layout:fragment="content" class="container-md p-4">
 
-    </section>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+</section>
+<script th:src="@{/js/userStatus.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

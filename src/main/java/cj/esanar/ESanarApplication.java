@@ -21,7 +21,7 @@ public class ESanarApplication {
     public static void main(String[] args) {
         SpringApplication.run(ESanarApplication.class, args);
     }
-    /*@Bean
+    @Bean
     CommandLineRunner unit(UserRepository userRepository, PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             PermissionsEntity createPermission = PermissionsEntity.builder().name("CREATE").build();
@@ -31,17 +31,19 @@ public class ESanarApplication {
             PermissionsEntity refactorePermission = PermissionsEntity.builder().name("REFACTOR").build();
 
             RoleEntity admin= RoleEntity.builder()
-                    .roleEnum(ERole.ADMIN)
+                    .name(ERole.ADMIN)
                     .listaPermisos(Set.of(createPermission, readPermission, deletePermission, updatePermission))
                     .build();
             RoleEntity enfRole= RoleEntity.builder()
-                    .roleEnum(ERole.ENF)
+                    .name(ERole.ENF)
                     .listaPermisos(Set.of(createPermission, readPermission, deletePermission, updatePermission))
                     .build();
 
             UserEntity userAdmin= UserEntity.builder()
                     .username("jeffer")
                     .password(passwordEncoder.encode("milluh123"))
+                    .email("chaustrejefferson@gmail.com")
+                    .telefono(3166846822L)
                     .isAccountNonExpired(true)
                     .isAccountNonLocked(true)
                     .isEnabled(true)
@@ -51,6 +53,8 @@ public class ESanarApplication {
             UserEntity userEnf= UserEntity.builder()
                     .username("angelica")
                     .password(passwordEncoder.encode("camila123"))
+                    .email("angelica.gaitan.duran@gmail.com")
+                    .telefono(3229433138L)
                     .isAccountNonExpired(true)
                     .isAccountNonLocked(true)
                     .isEnabled(true)
@@ -131,5 +135,5 @@ public class ESanarApplication {
             pacienteRepository.save(paciente4);
         };
 
-    }*/
+    }
 }
