@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{loyaut/plantilla}"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>welcome page</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+
+    <div class="px-4 py-5 my-5 d-md-flex justify-content-around">
+        <div class=" mt-5">
+            <div>
+                <h1 class="display-5 fw-bold">Bienvenido a Enf-Software</h1>
+            </div>
+
+            <div class="mt-2">
+                <h3>
+                    Portal Web para<br>la Clinica de Heridas Enf-Sanar
+                </h3>
+                <div class="text-center mt-4" sec:authorize="!isAuthenticated()">
+                    <a class="" th:href="@{/login}">
+                        <button class="btn btn-lg" style="background-color: lightgreen">Ingresar</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img th:src="@{/images/LogoImageWEB.png}"
+                 class="img-fluid" width="440px" alt="logo">
+        </div>
+
+    </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{loyaut/plantilla}">
+<head>
+    <meta charset="UTF-8">
+    <title>paciente</title>
+</head>
+<body>
+<section class="container mt-5" layout:fragment="content">
+
+    <form th:action="@{/enf/paciente/guardar}" th:object="${paciente}" method="post" class="row g-3">
+
+        <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="col-md-6">
+            <label for="identificacion" class="form-label">Identificación:</label>
+            <input type="number" id="identificacion" th:field="*{identificacion}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
+            <input type="text" id="tipoDocumento" th:field="*{tipoDocumento}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{telefono}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="direccion" class="form-label">Dirección:</label>
+            <input type="text" id="direccion" th:field="*{direccion}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="barrio" class="form-label">Barrio:</label>
+            <input type="text" id="barrio" th:field="*{barrio}"  class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="sexo" class="form-label">Sexo:</label>
+            <select id="sexo" th:field="*{sexo}" class="form-select" >
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="tipoSangre" class="form-label">Tipo de Sangre:</label>
+            <input type="text" id="tipoSangre" th:field="*{tipoSangre}" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="correo" class="form-label">Correo:</label>
+            <input type="email" id="correo" th:field="*{correo}" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="ocupacion" class="form-label">Ocupación:</label>
+            <input type="text" id="ocupacion" th:field="*{ocupacion}" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="entidad" class="form-label">Entidad:</label>
+            <input type="text" id="entidad" th:field="*{entidad}" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label for="estadoCivil" class="form-label">Estado Civil:</label>
+            <select id="estadoCivil" th:field="*{estadoCivil}" class="form-select" >
+                <option value="soltero">Soltero</option>
+                <option value="casado">Casado</option>
+                <option value="divorciado">Divorciado</option>
+                <option value="viudo">Viudo</option>
+            </select>
+        </div>
+
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+        </div>
+    </form>
+    <div class="col-12 text-center mt-3">
+        <a th:href="@{eliminar(id=${paciente.id})}">
+            <button class="btn btn-danger">Eliminar Paciente</button>
+        </a>
+    </div>
+</section>
+</body>
+</html>
