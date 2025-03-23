@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -29,13 +29,13 @@ public class UserEntity {
     @Column(name = "telefono")
     private Long telefono;
 
-    @Column(name = "is_enabled")
+    @Column(name = "enabled")
     private boolean isEnabled;
-    @Column(name = "is_account_non_expired")
+    @Column(name = "account_non_expired")
     private boolean isAccountNonExpired;
-    @Column(name = "is_account_non_locked")
+    @Column(name = "account_non_locked")
     private boolean isAccountNonLocked;
-    @Column(name = "is_credentials_non_expired")
+    @Column(name = "credentials_non_expired")
     private boolean isCredentialsNonExpired;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
