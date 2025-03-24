@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{loyaut/plantilla}">
 <head>
@@ -50,7 +50,7 @@
 
         <div class="col-lg-6">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" class="form-control" />
+            <input type="date" name="fechaNacimiento"  id="fechaNacimiento" th:value="${fecha}" class="form-control" />
         </div>
 
         <div class="col-lg-6">

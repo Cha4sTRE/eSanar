@@ -5,12 +5,17 @@ import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.PacienteServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -36,10 +41,13 @@ public class EnfController {
     }
 
     @PostMapping("paciente/guardar")
-    public String guardar(@Valid PacienteEntity paciente, Errors errors) {
+    public String guardar(@Valid PacienteEntity paciente,@RequestParam String fechaNacimiento, Errors errors) {
         if (errors.hasErrors()) {
             return "enf/paciente-form";
         }
+
+        LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
+        paciente.setFechaNacimiento(dateNacimiento);
         pacienteServiceImpl.guardaPaciente(paciente);
         return "redirect:/enf/";
     }
@@ -48,6 +56,11 @@ public class EnfController {
     public String paciente(PacienteEntity paciente, Model model) {
 
         PacienteEntity pacienteEspecifico = pacienteServiceImpl.findPacienteById(paciente);
+
+        DateTimeFormatter formato=DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fecha= pacienteEspecifico.getFechaNacimiento().format(formato);
+
+        model.addAttribute("fecha", fecha);
         model.addAttribute("paciente", pacienteEspecifico);
         return "enf/paciente-form";
     }

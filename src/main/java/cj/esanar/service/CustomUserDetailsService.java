@@ -10,9 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class CustomUserDetailsService implements UserDetails {
+
     private final UserEntity user;
-
-
 
     public CustomUserDetailsService(UserEntity userEntity){
         this.user=userEntity;

@@ -1,7 +1,6 @@
 package cj.esanar.config;
 
 
-import cj.esanar.service.CustomUserDetailsService;
 import cj.esanar.service.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

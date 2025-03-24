@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -43,7 +43,10 @@ public class PacienteEntity {
     private String barrio;
 
     @Column(name = "fecha_nacimiento", nullable = false)
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
+
+    @Column(name = "edad", nullable = false)
+    private int edad;
 
     @Column(name = "sexo", nullable = false, length = 10)
     private String sexo;
@@ -62,6 +65,7 @@ public class PacienteEntity {
 
     @Column(name = "estado_civil", nullable = false, length = 20)
     private String estadoCivil;
+
 
 
 }
