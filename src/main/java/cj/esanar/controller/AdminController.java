@@ -3,8 +3,8 @@ package cj.esanar.controller;
 
 import cj.esanar.persistence.entity.UserEntity;
 import cj.esanar.persistence.repository.RoleRepository;
-import cj.esanar.service.CustomUserDetailsService;
-import cj.esanar.service.UserDetailServiceImpl;
+import cj.esanar.service.implement.CustomUserDetailsService;
+import cj.esanar.service.implement.UserDetailServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")

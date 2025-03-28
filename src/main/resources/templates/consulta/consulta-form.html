@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{loyaut/plantilla}">
+<head>
+    <meta charset="UTF-8">
+    <title>consulta</title>
+</head>
+<body>
+<section class="container mt-5" layout:fragment="content">
+
+    <form th:action="@{/consulta/agregar}" th:object="${consulta}" method="post" class="row g-3">
+
+        <input type="hidden" name="id" th:field="*{id}">
+
+        <div class="col-lg-6">
+            <label for="fechaHoraAtencion" class="form-label">Hora y Fecha de Consulta</label>
+            <input type="datetime-local" id="fechaHoraAtencion" th:value="${hora}" name="fecha_hora"  class="form-control" />
+        </div>
+
+        <div class="col-lg-6">
+            <label for="motivoConsulta" class="form-label">Motido de Consulta:</label>
+            <input type="datetime-local" th:field="*{motivoConsulta}" id="motivoConsulta" class="form-control" />
+        </div>
+        
+
+    </form>
+    <!--<div class="col-12 text-center mt-3">
+        <a th:href="@{eliminar(id=${paciente.id})}">
+            <button class="btn btn-danger">Eliminar Paciente</button>
+        </a>
+    </div>-->
+</section>
+</body>
+</html>

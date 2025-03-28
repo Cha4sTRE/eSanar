@@ -25,8 +25,13 @@
                     <a th:href="@{/enf/}">
                         <button type="submit" class="btn" style="background-color: lightgreen">Pacientes</button>
                     </a>
-
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('ENF')">
+                    <a th:href="@{consulta/historias}">
+                        <button type="submit" class="btn" style="background-color: lightgreen">Historias</button>
+                    </a>
+                </li>
+
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form class="container-fluid justify-content-start" th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-danger">Cerrar sesión</button>

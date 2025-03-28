@@ -2,29 +2,28 @@ package cj.esanar.controller;
 
 
 import cj.esanar.persistence.entity.PacienteEntity;
-import cj.esanar.service.PacienteServiceImpl;
+import cj.esanar.service.implement.PacienteServiceImpl;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+@AllArgsConstructor
 
 @Controller
 @RequestMapping("/enf")
 @PreAuthorize("hasRole('ENF')")
 public class EnfController {
 
-    @Autowired
-    private PacienteServiceImpl pacienteServiceImpl;
+    private final PacienteServiceImpl pacienteServiceImpl;
 
     @GetMapping("/")
     public String home(Model model) {

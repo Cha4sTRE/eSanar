@@ -3,7 +3,7 @@ package cj.esanar.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -59,11 +59,8 @@ public class ConsultaEntity {
     @Column(name = "exudado_nivel", length = 50)
     private String exudadoNivel;
 
-    @Column(name = "fecha_atencion")
-    private LocalDate fechaAtencion;
-
-    @Column(name = "hora_inicio")
-    private LocalTime horaInicio;
+    @Column(name = "fecha_hora_atencion")
+    private LocalDateTime fechaHoraAtencion;
 
     @Column(name = "hora_final")
     private LocalTime horaFinal;

@@ -1,8 +1,9 @@
 package cj.esanar.config;
 
 import cj.esanar.persistence.entity.*;
-import cj.esanar.persistence.repository.PacienteRepository;
 import cj.esanar.persistence.repository.UserRepository;
+import cj.esanar.service.ConsultaService;
+import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +24,8 @@ public class DataInitializer implements CommandLineRunner {
     private final PacienteService pacienteService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final HistoriaService historiaService;
+    private final ConsultaService consultaService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -61,10 +66,8 @@ public class DataInitializer implements CommandLineRunner {
                 .isCredentialsNonExpired(true)
                 .roles(Set.of(enfRole))
                 .build();
-
-
-
-        PacienteEntity paciente1 = PacienteEntity.builder()
+        userRepository.saveAll(List.of(userAdmin,userEnf));
+        /*PacienteEntity paciente1 = PacienteEntity.builder()
                 .nombre("david")
                 .apellido("aceros")
                 .tipoDocumento("cedula de ciudadania")
@@ -113,7 +116,7 @@ public class DataInitializer implements CommandLineRunner {
                 .entidad("EPS saludtotal")
                 .estadoCivil("casada")
                 .build();
-
+        */
         PacienteEntity paciente4 = PacienteEntity.builder()
                 .nombre("Carlos")
                 .apellido("Perez")
@@ -130,10 +133,38 @@ public class DataInitializer implements CommandLineRunner {
                 .entidad("EPS compensar")
                 .estadoCivil("soltero")
                 .build();
-        userRepository.saveAll(List.of(userAdmin,userEnf));
-        pacienteService.guardaPaciente(paciente1);
-        pacienteService.guardaPaciente(paciente2);
-        pacienteService.guardaPaciente(paciente3);
+
+
+        HistoriaEntity historia1= HistoriaEntity.builder()
+                .paciente(paciente4).
+                fechaCreacion(LocalDate.now()).
+                build();
         pacienteService.guardaPaciente(paciente4);
+        historiaService.guardaHistoria(historia1);
+
+
+        ConsultaEntity consulta1= ConsultaEntity.builder()
+                .enfermera(userEnf)
+                .historiaClinica(historia1)
+                .diagnosticoPrincipal("Fiebre")
+                .motivoConsulta("Dolor de cabeza y fiebre alta")
+                .largo(10)
+                .ancho(5)
+                .profundidad("Superficial")
+                .forma("Ovalada")
+                .olor("No")
+                .bordesHerida("Definidos")
+                .infeccion("No")
+                .exudadoTipo("Seroso")
+                .exudadoNivel("Moderado")
+                .fechaHoraAtencion(LocalDateTime.now())
+                .horaFinal(LocalTime.of(11, 0))
+                .build();
+
+        historia1.agregarConsultas(consulta1);
+        consultaService.guardarConsulta(consulta1);
+        historiaService.guardaHistoria(historia1);
+
+
     }
 }

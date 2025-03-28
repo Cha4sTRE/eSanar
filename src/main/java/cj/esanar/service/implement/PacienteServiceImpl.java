@@ -1,7 +1,8 @@
-package cj.esanar.service;
+package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.persistence.repository.PacienteRepository;
+import cj.esanar.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,25 +18,24 @@ public class PacienteServiceImpl implements PacienteService {
     private PacienteRepository pacienteRepository;
 
     @Override
-    @Transactional
     public List<PacienteEntity> listaPacientes() {
         return (List<PacienteEntity>) pacienteRepository.findAll();
     }
 
     @Override
-    @Transactional
     public PacienteEntity findPacienteById(PacienteEntity paciente) {
         return pacienteRepository.findById(paciente.getId()).orElse(null);
     }
 
     @Override
-    @Transactional
     public void guardaPaciente(PacienteEntity paciente) {
         paciente.setEdad(calculateEdad(paciente.getFechaNacimiento()));
         pacienteRepository.save(paciente);
     }
+    public void guardaPacientes(List<PacienteEntity> pacientes) {
+        pacienteRepository.saveAll(pacientes);
+    }
     @Override
-    @Transactional
     public void borraPaciente(PacienteEntity paciente) {
         pacienteRepository.delete(paciente);
     }

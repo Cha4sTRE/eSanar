@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -22,14 +22,19 @@ public class HistoriaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "fecha_creacion")
+    private LocalDate fechaCreacion;
+    public void agregarConsultas(ConsultaEntity consulta) {
+        this.consultas.add(consulta);
+        consulta.setHistoriaClinica(this);
+    }
+
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<ConsultaEntity> consultas= new HashSet<>();
+
     @OneToOne
     @JoinColumn(name = "id_paciente", nullable = false)
     private PacienteEntity paciente;
-
-    @Column(name = "fecha_creacion")
-    private LocalDate fechaCreacion;
-
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ConsultaEntity> consultas = new ArrayList<>();
 
 }
