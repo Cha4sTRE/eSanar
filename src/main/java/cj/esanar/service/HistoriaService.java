@@ -8,6 +8,7 @@ public interface HistoriaService {
 
     List<HistoriaEntity> listaHistorias();
     void guardaHistoria(HistoriaEntity historia);
+    void guardaHistorias(List<HistoriaEntity> historias);
     HistoriaEntity buscaHistoria(HistoriaEntity historia);
     void borraHistoria(HistoriaEntity historia);
 

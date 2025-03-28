@@ -26,7 +26,7 @@ public class ConsultaEntity {
     @JoinColumn(name = "id_enfermera")
     private UserEntity enfermera;
 
-    @Column(name = "diagnostico_principal", length = 10)
+    @Column(name = "diagnostico_principal", length = 50)
     private String diagnosticoPrincipal;
 
     @Column(name = "motivo_consulta", length = 255)

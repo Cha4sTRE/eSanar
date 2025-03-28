@@ -23,7 +23,10 @@ public class ConsultaServiceImpl implements ConsultaService {
     public void guardarConsulta(ConsultaEntity consulta) {
         consultaRepository.save(consulta);
     }
-
+    @Override
+    public void guardarConsultas(List<ConsultaEntity> consultas){
+        consultaRepository.saveAll(consultas);
+    }
     @Override
     public ConsultaEntity consultaPorId(ConsultaEntity consulta) {
         return consultaRepository.findById(consulta.getId()).orElse(null);

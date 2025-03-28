@@ -23,7 +23,10 @@ public class HistoriaServiceImpl implements HistoriaService {
     public void guardaHistoria(HistoriaEntity historia) {
         historiaRepository.save(historia);
     }
-
+    @Override
+    public void guardaHistorias(List<HistoriaEntity> historias){
+        historiaRepository.saveAll(historias);
+    }
     @Override
     public HistoriaEntity buscaHistoria(HistoriaEntity historia) {
         return historiaRepository.findById(historia.getId()).orElse(null);

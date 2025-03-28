@@ -26,7 +26,7 @@ public class ConsultaController {
 
     @GetMapping("/historias")
     public String historias(Model model) {
-        return "consulta/historias";
+        return "vista de historias";
     }
 
     @GetMapping("/nueva")

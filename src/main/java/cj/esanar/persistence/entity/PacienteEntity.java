@@ -66,7 +66,7 @@ public class PacienteEntity {
     @Column(name = "estado_civil", nullable = false, length = 20)
     private String estadoCivil;
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private HistoriaEntity historiaEntity;
 
 }

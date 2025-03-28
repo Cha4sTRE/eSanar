@@ -67,7 +67,7 @@ public class DataInitializer implements CommandLineRunner {
                 .roles(Set.of(enfRole))
                 .build();
         userRepository.saveAll(List.of(userAdmin,userEnf));
-        /*PacienteEntity paciente1 = PacienteEntity.builder()
+        PacienteEntity paciente1 = PacienteEntity.builder()
                 .nombre("david")
                 .apellido("aceros")
                 .tipoDocumento("cedula de ciudadania")
@@ -116,7 +116,6 @@ public class DataInitializer implements CommandLineRunner {
                 .entidad("EPS saludtotal")
                 .estadoCivil("casada")
                 .build();
-        */
         PacienteEntity paciente4 = PacienteEntity.builder()
                 .nombre("Carlos")
                 .apellido("Perez")
@@ -133,16 +132,25 @@ public class DataInitializer implements CommandLineRunner {
                 .entidad("EPS compensar")
                 .estadoCivil("soltero")
                 .build();
-
+        pacienteService.guardaPacientes(List.of(paciente1,paciente2, paciente3, paciente4));
 
         HistoriaEntity historia1= HistoriaEntity.builder()
+                .paciente(paciente1).
+                fechaCreacion(LocalDate.now()).
+                build();
+        HistoriaEntity historia2= HistoriaEntity.builder()
+                .paciente(paciente2).
+                fechaCreacion(LocalDate.now()).
+                build();
+        HistoriaEntity historia3= HistoriaEntity.builder()
+                .paciente(paciente3).
+                fechaCreacion(LocalDate.now()).
+                build();
+        HistoriaEntity historia4= HistoriaEntity.builder()
                 .paciente(paciente4).
                 fechaCreacion(LocalDate.now()).
                 build();
-        pacienteService.guardaPaciente(paciente4);
-        historiaService.guardaHistoria(historia1);
-
-
+        historiaService.guardaHistorias(List.of(historia1,historia2,historia3,historia4));
         ConsultaEntity consulta1= ConsultaEntity.builder()
                 .enfermera(userEnf)
                 .historiaClinica(historia1)
@@ -160,10 +168,65 @@ public class DataInitializer implements CommandLineRunner {
                 .fechaHoraAtencion(LocalDateTime.now())
                 .horaFinal(LocalTime.of(11, 0))
                 .build();
+        ConsultaEntity consulta2= ConsultaEntity.builder()
+                .enfermera(userEnf)
+                .historiaClinica(historia2)
+                .diagnosticoPrincipal("anemia")
+                .motivoConsulta("Dolor de cabeza y fiebre alta")
+                .largo(10)
+                .ancho(5)
+                .profundidad("Superficial")
+                .forma("Ovalada")
+                .olor("No")
+                .bordesHerida("Definidos")
+                .infeccion("No")
+                .exudadoTipo("Seroso")
+                .exudadoNivel("Moderado")
+                .fechaHoraAtencion(LocalDateTime.now())
+                .horaFinal(LocalTime.of(11, 0))
+                .build();
+        ConsultaEntity consulta3= ConsultaEntity.builder()
+                .enfermera(userEnf)
+                .historiaClinica(historia3)
+                .diagnosticoPrincipal("resfriado")
+                .motivoConsulta("Dolor de cabeza y fiebre alta")
+                .largo(10)
+                .ancho(5)
+                .profundidad("Superficial")
+                .forma("Ovalada")
+                .olor("No")
+                .bordesHerida("Definidos")
+                .infeccion("No")
+                .exudadoTipo("Seroso")
+                .exudadoNivel("Moderado")
+                .fechaHoraAtencion(LocalDateTime.now())
+                .horaFinal(LocalTime.of(11, 0))
+                .build();
+        ConsultaEntity consulta4= ConsultaEntity.builder()
+                .enfermera(userEnf)
+                .historiaClinica(historia4)
+                .diagnosticoPrincipal("tuberculosis")
+                .motivoConsulta("Dolor de cabeza y fiebre alta")
+                .largo(10)
+                .ancho(5)
+                .profundidad("Superficial")
+                .forma("Ovalada")
+                .olor("No")
+                .bordesHerida("Definidos")
+                .infeccion("No")
+                .exudadoTipo("Seroso")
+                .exudadoNivel("Moderado")
+                .fechaHoraAtencion(LocalDateTime.now())
+                .horaFinal(LocalTime.of(11, 0))
+                .build();
+
 
         historia1.agregarConsultas(consulta1);
-        consultaService.guardarConsulta(consulta1);
-        historiaService.guardaHistoria(historia1);
+        historia2.agregarConsultas(consulta2);
+        historia3.agregarConsultas(consulta3);
+        historia4.agregarConsultas(consulta4);
+        consultaService.guardarConsultas(List.of(consulta1,consulta2,consulta3,consulta4));
+        //historiaService.guardaHistoria(historia1); <- no guardar porque historia ya lo guarda
 
 
     }

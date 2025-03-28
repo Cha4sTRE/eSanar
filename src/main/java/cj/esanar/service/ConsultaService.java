@@ -9,6 +9,7 @@ public interface ConsultaService {
 
    List<ConsultaEntity> listaConsultas();
    void guardarConsulta(ConsultaEntity consulta);
+   void guardarConsultas(List<ConsultaEntity> consultas);
    ConsultaEntity consultaPorId(ConsultaEntity consulta);
    void eliminarConsulta(ConsultaEntity consulta);
 

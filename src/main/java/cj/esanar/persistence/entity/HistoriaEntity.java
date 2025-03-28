@@ -29,12 +29,13 @@ public class HistoriaEntity {
         consulta.setHistoriaClinica(this);
     }
 
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private Set<ConsultaEntity> consultas= new HashSet<>();
-
     @OneToOne
     @JoinColumn(name = "id_paciente", nullable = false)
     private PacienteEntity paciente;
+
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<ConsultaEntity> consultas= new HashSet<>();
+
 
 }
