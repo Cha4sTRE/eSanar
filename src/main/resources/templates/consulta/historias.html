@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{loyaut/plantilla}">
+<head>
+    <meta charset="UTF-8">
+    <title>historias</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="col-lg-7">
+        <div class="col-md-3 mb-4">
+            <a th:href="@{nueva}">
+                <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
+            </a>
+        </div>
+        <div class="table-responsive-md">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Paciente</th>
+                    <th>consultas</th>
+                    <th>Motivo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="historia:${historias}">
+                    <td th:text="${historia.fechaCreacion.format(formato)}"></td>
+                    <td th:text="${historia.paciente.nombre}"></td>
+                    <td th:text="${historia.consultas.size()}"></td>
+                    <td>
+                        <div th:each="consulta:${historia.consultas}">
+                            <div><span th:text="${consulta.motivoConsulta}"></span></div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

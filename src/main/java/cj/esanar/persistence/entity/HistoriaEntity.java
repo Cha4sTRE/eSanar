@@ -24,18 +24,22 @@ public class HistoriaEntity {
 
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
-    public void agregarConsultas(ConsultaEntity consulta) {
-        this.consultas.add(consulta);
-        consulta.setHistoriaClinica(this);
-    }
 
     @OneToOne
     @JoinColumn(name = "id_paciente", nullable = false)
     private PacienteEntity paciente;
 
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "historiaClinica",
+            cascade = CascadeType.ALL, orphanRemoval = true,
+            fetch = FetchType.EAGER)// NO RECOMENDADO: carga inmediatamente las consultas y las historias
     @Builder.Default
     private Set<ConsultaEntity> consultas= new HashSet<>();
+
+
+    public void agregarConsultas(ConsultaEntity consulta) {
+        this.consultas.add(consulta);
+        consulta.setHistoriaClinica(this);
+    }
 
 
 }

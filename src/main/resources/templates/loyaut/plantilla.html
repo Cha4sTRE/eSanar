@@ -26,8 +26,8 @@
                         <button type="submit" class="btn" style="background-color: lightgreen">Pacientes</button>
                     </a>
                 </li>
-                <li class="nav-item mr-3" sec:authorize="hasRole('ENF')">
-                    <a th:href="@{consulta/historias}">
+                <li class="nav-item me-3" sec:authorize="hasRole('ENF')">
+                    <a th:href="@{/consulta/historias}">
                         <button type="submit" class="btn" style="background-color: lightgreen">Historias</button>
                     </a>
                 </li>
