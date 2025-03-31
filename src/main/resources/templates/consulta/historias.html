@@ -10,35 +10,35 @@
 
 <section layout:fragment="content">
     <div class="col-lg-7">
-        <div class="col-md-3 mb-4">
+        <div class="col-md-7 mb-4">
+            <h1 th:text="'Historial de Consultas de ' +${pacienteNombre}" class="mb-3"></h1>
+            <div th:if="${consultas.consultas.isEmpty()}">
+                <p>El paciente aun no tiene consultas</p>
+            </div>
             <a th:href="@{nueva}">
                 <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
             </a>
         </div>
-        <div class="table-responsive-md">
-            <table class="table table-hover">
+        <div class="col-mb-10">
+            <table class="table table-stripped">
                 <thead>
-                <tr>
+                    <th>id</th>
                     <th>Fecha</th>
-                    <th>Paciente</th>
-                    <th>consultas</th>
                     <th>Motivo</th>
-                </tr>
+                    <th>Ver</th>
                 </thead>
                 <tbody>
-                <tr th:each="historia:${historias}">
-                    <td th:text="${historia.fechaCreacion.format(formato)}"></td>
-                    <td th:text="${historia.paciente.nombre}"></td>
-                    <td th:text="${historia.consultas.size()}"></td>
-                    <td>
-                        <div th:each="consulta:${historia.consultas}">
-                            <div><span th:text="${consulta.motivoConsulta}"></span></div>
-                        </div>
-                    </td>
-                </tr>
+                    <div th:if="${!consultas.consultas.isEmpty()}">
+                        <tr th:each="consulta:${consultas.consultas}">
+                            <td th:text="${consulta.id}"></td>
+                            <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
+                            <td th:text="${consulta.motivoConsulta}"></td>
+                            <td><a href="#">ver</a></td>
+                        </tr>
+                    </div>
+
                 </tbody>
             </table>
-
         </div>
     </div>
 

@@ -1,10 +1,7 @@
 package cj.esanar.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,6 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = {"paciente","consultas"})
 @Entity
 @Table(name = "historia_clinica")
 public class HistoriaEntity {
@@ -31,7 +29,7 @@ public class HistoriaEntity {
 
     @OneToMany(mappedBy = "historiaClinica",
             cascade = CascadeType.ALL, orphanRemoval = true,
-            fetch = FetchType.EAGER)// NO RECOMENDADO: carga inmediatamente las consultas y las historias
+            fetch = FetchType.LAZY)// NO RECOMENDADO: carga inmediatamente las consultas y las historias
     @Builder.Default
     private Set<ConsultaEntity> consultas= new HashSet<>();
 

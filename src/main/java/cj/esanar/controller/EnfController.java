@@ -1,11 +1,12 @@
 package cj.esanar.controller;
 
 
+import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
-import cj.esanar.service.implement.PacienteServiceImpl;
+import cj.esanar.service.HistoriaService;
+import cj.esanar.service.PacienteService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -23,12 +26,14 @@ import java.util.List;
 @PreAuthorize("hasRole('ENF')")
 public class EnfController {
 
-    private final PacienteServiceImpl pacienteServiceImpl;
+    private final PacienteService pacienteServiceImpl;
+    private final HistoriaService historiaServiceImpl;
 
     @GetMapping("/")
     public String home(Model model) {
 
         List<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes();
+        List<HistoriaEntity> historias= historiaServiceImpl.listaHistorias();
         model.addAttribute("pacientes", pacientes);
         return "enf/home";
     }
@@ -44,9 +49,9 @@ public class EnfController {
         if (errors.hasErrors()) {
             return "enf/paciente-form";
         }
-
         LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
         paciente.setFechaNacimiento(dateNacimiento);
+        paciente.setHistoriaEntity(new HistoriaEntity(null, dateNacimiento, paciente, Collections.emptySet()));
         pacienteServiceImpl.guardaPaciente(paciente);
         return "redirect:/enf/";
     }

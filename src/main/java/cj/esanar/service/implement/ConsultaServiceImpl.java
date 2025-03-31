@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -15,8 +16,8 @@ public class ConsultaServiceImpl implements ConsultaService {
     private final ConsultaRepository consultaRepository;
 
     @Override
-    public List<ConsultaEntity> listaConsultas() {
-        return (List<ConsultaEntity>) consultaRepository.findAll();
+    public Set<ConsultaEntity> listaConsultas() {
+        return (Set<ConsultaEntity>) consultaRepository.findAll();
     }
 
     @Override

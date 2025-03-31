@@ -14,7 +14,6 @@ import java.util.Map;
 
 @Configuration
 public class FaviconConfig {
-
     @Bean
     public SimpleUrlHandlerMapping customFaviconHandlerMapping() {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();

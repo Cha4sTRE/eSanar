@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = {"historiaClinica"})
 @Entity
 @Table(name = "consulta")
 public class ConsultaEntity {
