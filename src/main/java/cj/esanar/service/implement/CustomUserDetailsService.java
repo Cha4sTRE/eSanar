@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetails {
                 .forEach(permissionsEntity -> authorities.add(new SimpleGrantedAuthority(permissionsEntity.getName())));
         return authorities;
     }
-
+    public Long getId(){return user.getId();}
     @Override
     public String getPassword() {
         return user.getPassword();

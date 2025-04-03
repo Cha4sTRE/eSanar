@@ -23,17 +23,22 @@ public class HistoriaEntity {
     @Column(name = "fecha_creacion")
     private LocalDate fechaCreacion;
 
+    /// {@link PacienteEntity} relacionado con esta historia
     @OneToOne
     @JoinColumn(name = "id_paciente", nullable = false)
     private PacienteEntity paciente;
 
-    @OneToMany(mappedBy = "historiaClinica",
-            cascade = CascadeType.ALL, orphanRemoval = true,
-            fetch = FetchType.LAZY)// NO RECOMENDADO: carga inmediatamente las consultas y las historias
+    ///
+    /// Atributo que relaciona {@link ConsultaEntity} con una historia, este relacion es de tipo
+    /// **Uno a Muchos**, ósea que **muchas** consultas pertenecen a **una** historia
+    ///
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private Set<ConsultaEntity> consultas= new HashSet<>();
 
 
+    /// Metodo para agregar consultas dentro de una historia
+    /// @param consulta consulta a agregar en la historia
     public void agregarConsultas(ConsultaEntity consulta) {
         this.consultas.add(consulta);
         consulta.setHistoriaClinica(this);

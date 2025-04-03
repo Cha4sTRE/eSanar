@@ -66,6 +66,13 @@ public class PacienteEntity {
     @Column(name = "estado_civil", nullable = false, length = 20)
     private String estadoCivil;
 
+    /// Atributo que relaciona la entidad **Paciente** con la entidad **Historia**.
+    /// En la base de datos esta relacion es de **Uno a Uno**, ósea que los pacientes tiene una historia
+    /// y las historias tienen un paciente
+    /// - mappedBy: mapea este **paciente** en el atributo 'paciente' de {@link HistoriaEntity},
+    /// esto genera la llave foránea en la base de datos
+
+
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private HistoriaEntity historiaEntity;
 

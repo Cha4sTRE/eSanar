@@ -57,7 +57,7 @@ public class EnfController {
     }
 
     @GetMapping("paciente/{nombre}")
-    public String paciente(PacienteEntity paciente, Model model) {
+    public String paciente(PacienteEntity paciente, Model model, @PathVariable String nombre) {
 
         PacienteEntity pacienteEspecifico = pacienteServiceImpl.findPacienteById(paciente);
 
@@ -65,6 +65,7 @@ public class EnfController {
         String fecha= pacienteEspecifico.getFechaNacimiento().format(formato);
 
         model.addAttribute("fecha", fecha);
+        model.addAttribute("nombre",nombre);
         model.addAttribute("paciente", pacienteEspecifico);
         return "enf/paciente-form";
     }

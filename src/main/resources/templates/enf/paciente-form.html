@@ -4,15 +4,16 @@
       layout:decorate="~{loyaut/plantilla}">
 <head>
     <meta charset="UTF-8">
-    <title>paciente</title>
+    <title th:text="'Paciente '+${nombre}"></title>
 </head>
 <body>
 <section class="container mt-5" layout:fragment="content">
 
+    <h1 th:text="'Mas sobre de '+${nombre}" class="mb-4"></h1>
+
     <form th:action="@{/enf/paciente/guardar}" th:object="${paciente}" method="post" class="row g-3">
 
         <input type="hidden" name="id" th:field="*{id}">
-
         <div class="col-lg-6">
             <label for="identificacion" class="form-label">Identificación:</label>
             <input type="number" id="identificacion" th:field="*{identificacion}"  class="form-control" />

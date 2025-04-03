@@ -18,7 +18,10 @@ public class ConsultaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    ///
+    /// Atributo que relaciona {@link HistoriaEntity} con muchas consultas, esta relacion es de **Muchos a Uno**
+    /// ósea que **muchas** consultas pertenecen a **una** historia
+    ///
     @ManyToOne
     @JoinColumn(name = "id_historia", nullable = false)
     private HistoriaEntity historiaClinica;
@@ -27,10 +30,10 @@ public class ConsultaEntity {
     @JoinColumn(name = "id_enfermera")
     private UserEntity enfermera;
 
-    @Column(name = "diagnostico_principal", length = 50)
+    @Column(name = "diagnostico_principal")
     private String diagnosticoPrincipal;
 
-    @Column(name = "motivo_consulta", length = 255)
+    @Column(name = "motivo_consulta")
     private String motivoConsulta;
 
     @Column(name = "largo")
@@ -39,25 +42,25 @@ public class ConsultaEntity {
     @Column(name = "ancho")
     private Integer ancho;
 
-    @Column(name = "profundidad", length = 50)
+    @Column(name = "profundidad")
     private String profundidad;
 
-    @Column(name = "forma", length = 50)
+    @Column(name = "forma")
     private String forma;
 
-    @Column(name = "olor", length = 3)
+    @Column(name = "olor")
     private String olor;
 
-    @Column(name = "bordes_herida", length = 50)
+    @Column(name = "bordes_herida")
     private String bordesHerida;
 
-    @Column(name = "infeccion", length = 50)
+    @Column(name = "infeccion")
     private String infeccion;
 
-    @Column(name = "exudado_tipo", length = 50)
+    @Column(name = "exudado_tipo")
     private String exudadoTipo;
 
-    @Column(name = "exudado_nivel", length = 50)
+    @Column(name = "exudado_nivel")
     private String exudadoNivel;
 
     @Column(name = "fecha_hora_atencion")

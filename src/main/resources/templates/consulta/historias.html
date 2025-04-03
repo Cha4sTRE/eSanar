@@ -4,7 +4,7 @@
       layout:decorate="~{loyaut/plantilla}">
 <head>
     <meta charset="UTF-8">
-    <title>historias</title>
+    <title th:text="'Historia de '+${pacienteNombre}"></title>
 </head>
 <body>
 
@@ -13,9 +13,9 @@
         <div class="col-md-7 mb-4">
             <h1 th:text="'Historial de Consultas de ' +${pacienteNombre}" class="mb-3"></h1>
             <div th:if="${consultas.consultas.isEmpty()}">
-                <p>El paciente aun no tiene consultas</p>
+                <p>El paciente aún no tiene consultas</p>
             </div>
-            <a th:href="@{nueva}">
+            <a th:href="@{/consulta/nueva(historiaId=${consultas.id})}">
                 <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
             </a>
         </div>
