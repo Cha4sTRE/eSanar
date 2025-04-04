@@ -25,7 +25,7 @@
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Motivo</th>
-                    <th>Ver</th>
+                    <th>Editar</th>
                 </thead>
                 <tbody>
                     <div th:if="${!consultas.consultas.isEmpty()}">
@@ -33,10 +33,9 @@
                             <td th:text="${consulta.id}"></td>
                             <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
                             <td th:text="${consulta.motivoConsulta}"></td>
-                            <td><a href="#">ver</a></td>
+                            <td><a th:href="@{/consulta/historia/}+@{${consulta.historiaClinica.id}(consulta=${consulta.id})}">editar</a></td>
                         </tr>
                     </div>
-
                 </tbody>
             </table>
         </div>

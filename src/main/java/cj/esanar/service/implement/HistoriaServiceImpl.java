@@ -28,8 +28,8 @@ public class HistoriaServiceImpl implements HistoriaService {
         historiaRepository.saveAll(historias);
     }
     @Override
-    public HistoriaEntity buscaHistoria(HistoriaEntity historia) {
-        return historiaRepository.findById(historia.getId()).orElse(null);
+    public HistoriaEntity buscaHistoria(Long id) {
+        return historiaRepository.findById(id).orElse(null);
     }
 
     @Override

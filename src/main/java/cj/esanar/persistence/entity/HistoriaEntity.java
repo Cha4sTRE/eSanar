@@ -2,6 +2,7 @@ package cj.esanar.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -39,6 +40,7 @@ public class HistoriaEntity {
 
     /// Metodo para agregar consultas dentro de una historia
     /// @param consulta consulta a agregar en la historia
+    ///
     public void agregarConsultas(ConsultaEntity consulta) {
         this.consultas.add(consulta);
         consulta.setHistoriaClinica(this);

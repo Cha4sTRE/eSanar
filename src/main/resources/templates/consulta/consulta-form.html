@@ -9,9 +9,11 @@
 <body>
 <section class="container mt-5" layout:fragment="content">
 
-    <form th:action="@{/consulta/agregar(historiaPaciente=${historiaPaciente.id})}" th:object="${consulta}" method="post" class="row g-3">
+    <form th:action="@{/consulta/agregar}" th:object="${consulta}" method="post" class="row g-3">
 
-        <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" id="idHistoria" name="idHistoria" th:value="${historiaPaciente.id}">
+
         <div class="col-lg-6">
             <label for="fechaHoraAtencion" class="form-label">Hora y Fecha de Consulta:</label>
             <input type="datetime-local" id="fechaHoraAtencion" th:value="${hora}" name="fechaHora"  class="form-control" />

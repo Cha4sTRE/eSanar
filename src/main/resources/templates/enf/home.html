@@ -37,7 +37,7 @@
                     <td th:text="${paciente.identificacion}"></td>
                     <td th:text="${paciente.telefono}"></td>
                     <td class="d-flex justify-content-center">
-                        <a th:href="@{/consulta/historia/}+@{${paciente.nombre}(id=${paciente.historiaEntity.id})}" class="me-2">
+                        <a th:href="@{/consulta/historias/}+@{${paciente.nombre}(id=${paciente.historiaEntity.id})}" class="me-2">
                             <i class="bi bi-clipboard-heart-fill"></i>
                         </a>
                         <a th:href="@{paciente/}+@{${paciente.nombre}(id=${paciente.id})}">

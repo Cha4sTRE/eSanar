@@ -3,6 +3,7 @@ package cj.esanar.service.implement;
 import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.repository.ConsultaRepository;
 import cj.esanar.service.ConsultaService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
