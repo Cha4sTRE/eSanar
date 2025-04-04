@@ -33,7 +33,7 @@ public class HistoriaEntity {
     /// Atributo que relaciona {@link ConsultaEntity} con una historia, este relacion es de tipo
     /// **Uno a Muchos**, ósea que **muchas** consultas pertenecen a **una** historia
     ///
-    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "historiaClinica", orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private Set<ConsultaEntity> consultas= new HashSet<>();
 

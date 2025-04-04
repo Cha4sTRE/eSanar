@@ -73,7 +73,7 @@ public class PacienteEntity {
     /// esto genera la llave foránea en la base de datos
 
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "paciente", orphanRemoval = true)
     private HistoriaEntity historiaEntity;
 
 }
