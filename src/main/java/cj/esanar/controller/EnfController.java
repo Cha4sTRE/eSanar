@@ -33,33 +33,21 @@ public class EnfController {
     public String home(Model model) {
 
         List<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes();
-        List<HistoriaEntity> historias= historiaServiceImpl.listaHistorias();
         model.addAttribute("pacientes", pacientes);
         return "enf/home";
     }
 
     @GetMapping("paciente/nuevo")
     public String nuevo(PacienteEntity paciente,Model model) {
-        model.addAttribute("paciente", new PacienteEntity());
+        model.addAttribute("paciente", paciente);
         return "enf/paciente-form";
     }
 
-    @PostMapping("paciente/guardar")
-    public String guardar(@Valid PacienteEntity paciente,@RequestParam String fechaNacimiento, Errors errors) {
-        if (errors.hasErrors()) {
-            return "enf/paciente-form";
-        }
-        LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
-        paciente.setFechaNacimiento(dateNacimiento);
-        paciente.setHistoriaEntity(new HistoriaEntity(null, dateNacimiento, paciente, Collections.emptySet()));
-        pacienteServiceImpl.guardaPaciente(paciente);
-        return "redirect:/enf/";
-    }
-
     @GetMapping("paciente/{nombre}")
-    public String paciente(PacienteEntity paciente, Model model, @PathVariable String nombre) {
+    public String paciente(PacienteEntity paciente, @RequestParam Long historia, Model model, @PathVariable String nombre) {
 
         PacienteEntity pacienteEspecifico = pacienteServiceImpl.findPacienteById(paciente);
+        HistoriaEntity historiaEspecifica= historiaServiceImpl.buscaHistoria(historia);
 
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String fecha= pacienteEspecifico.getFechaNacimiento().format(formato);
@@ -67,12 +55,36 @@ public class EnfController {
         model.addAttribute("fecha", fecha);
         model.addAttribute("nombre",nombre);
         model.addAttribute("paciente", pacienteEspecifico);
+        model.addAttribute("historiaEspecifica", historiaEspecifica);
         return "enf/paciente-form";
     }
 
     @GetMapping("paciente/eliminar")
     public String eliminar(PacienteEntity paciente) {
         pacienteServiceImpl.borraPaciente(paciente);
+        return "redirect:/enf/";
+    }
+
+    @PostMapping("paciente/guardar")
+    public String guardar(@Valid PacienteEntity paciente, @RequestParam(value = "idHistoria",required = false) Long idHistoria,@RequestParam String fechaNacimiento, Errors errors) {
+        if (errors.hasErrors()) {
+            return "enf/paciente-form";
+        }
+        LocalDate dateNacimiento= LocalDate.parse(fechaNacimiento);
+        LocalDate hoy=LocalDate.now();
+        paciente.setFechaNacimiento(dateNacimiento);
+        if (paciente.getId() == null) {
+            // CASO NUEVO
+            HistoriaEntity historiaNueva= new HistoriaEntity(null, hoy, paciente, Collections.emptySet());
+            historiaNueva.setPaciente(paciente);
+            paciente.setHistoriaEntity(historiaNueva);
+        } else {
+            // CASO EDICIÓN
+            HistoriaEntity historiaExistente = historiaServiceImpl.buscaHistoria(idHistoria);
+            paciente.setHistoriaEntity(historiaExistente);
+        }
+        pacienteServiceImpl.guardaPaciente(paciente);
+
         return "redirect:/enf/";
     }
 

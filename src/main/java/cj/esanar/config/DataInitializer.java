@@ -18,7 +18,7 @@ import java.util.Set;
 
 
 @AllArgsConstructor
-//@Component
+@Component
 public class DataInitializer implements CommandLineRunner {
 
     private final PacienteService pacienteService;

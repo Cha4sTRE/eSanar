@@ -13,7 +13,11 @@
 
     <form th:action="@{/enf/paciente/guardar}" th:object="${paciente}" method="post" class="row g-3">
 
-        <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" id="id" name="id" th:field="*{id}">
+        <th:block th:if="${historiaEspecifica != null and historiaEspecifica.id != null}">
+            <input type="hidden" id="idHistoria" name="idHistoria" th:value="${historiaEspecifica.id}" />
+        </th:block>
+
         <div class="col-lg-6">
             <label for="identificacion" class="form-label">Identificación:</label>
             <input type="number" id="identificacion" th:field="*{identificacion}"  class="form-control" />

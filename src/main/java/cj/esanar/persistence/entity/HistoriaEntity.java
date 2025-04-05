@@ -25,7 +25,7 @@ public class HistoriaEntity {
     private LocalDate fechaCreacion;
 
     /// {@link PacienteEntity} relacionado con esta historia
-    @OneToOne
+    @OneToOne(cascade =CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn(name = "id_paciente", nullable = false)
     private PacienteEntity paciente;
 
