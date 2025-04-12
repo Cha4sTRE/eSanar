@@ -57,6 +57,10 @@ public class AdminController {
             System.out.println("Errores en la validación: " + errors.getAllErrors());
             return "admin/registro";
         }
+        usuario.setEnabled(true);
+        usuario.setAccountNonLocked(true);
+        usuario.setAccountNonExpired(true);
+        usuario.setCredentialsNonExpired(true);
         userDetailService.saveUser(usuario);
         return "redirect:/admin/";
     }

@@ -24,10 +24,9 @@
             </textarea>
         </div>
         <div class="col-lg-6">
-            <label for="diagnosticoPrincipal" class="form-label">Diagnostico Principal(CIE-10)</label>
-            <select id="diagnosticoPrincipal" th:field="*{diagnosticoPrincipal}" class="form-select">
-                <option value=""></option>
-            </select>
+            <label for="diagnosticoPrincipal" class="form-label">Diagnostico Principal(CIE)</label>
+            <input type="text" id="diagnosticoPrincipal" class="ctw-input form-control" data-ctw-ino="1" th:field="*{diagnosticoPrincipal}">
+            <div class="ctw-window" data-ctw-ino="1"></div>
         </div>
         <div class="col-lg-6">
             <label for="infeccion" class="form-label">Infeccion: </label>
@@ -75,5 +74,6 @@
         </a>
     </div>-->
 </section>
+
 </body>
 </html>

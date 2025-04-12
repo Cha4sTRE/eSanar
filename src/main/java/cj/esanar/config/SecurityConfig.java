@@ -58,8 +58,6 @@ public class SecurityConfig {
         return daoProvider;
     }
 
-    //obtiene los usuarios de la base de datos
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
