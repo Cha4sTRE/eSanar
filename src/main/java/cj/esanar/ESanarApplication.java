@@ -21,7 +21,7 @@ public class ESanarApplication {
     public static void main(String[] args) {
         SpringApplication.run(ESanarApplication.class, args);
     }
-    /*@Bean
+    @Bean
     CommandLineRunner unit(UserRepository userRepository, PacienteRepository pacienteRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             PermissionsEntity createPermission = PermissionsEntity.builder().name("CREATE").build();
@@ -135,5 +135,5 @@ public class ESanarApplication {
             pacienteRepository.save(paciente4);
         };
 
-    }*/
+    }
 }
