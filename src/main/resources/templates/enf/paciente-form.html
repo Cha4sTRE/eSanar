@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{loyaut/plantilla}">
 <head>
     <meta charset="UTF-8">
@@ -8,8 +9,9 @@
 </head>
 <body>
 <section class="container mt-5" layout:fragment="content">
-
-    <h1 th:text="'Mas sobre de '+${nombre}" class="mb-4"></h1>
+    <div th:if="${nombre != null}">
+        <h1 th:text="'Mas sobre de '+${nombre}" class="mb-4"></h1>
+    </div>
 
     <form th:action="@{/enf/paciente/guardar}" th:object="${paciente}" method="post" class="row g-3">
 
@@ -25,7 +27,11 @@
 
         <div class="col-lg-6">
             <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
-            <input type="text" id="tipoDocumento" th:field="*{tipoDocumento}"  class="form-control" />
+            <select id="tipoDocumento" th:field="*{tipoDocumento}" class="form-select">
+                <option value="Cedula de Ciudadania">Cedula de Ciudadanía</option>
+                <option value="Targeta de identidad">Targeta de Identídad</option>
+                <option value="Cedula de extrangeria">Cedula de Extrangería</option>
+            </select>
         </div>
 
         <div class="col-lg-6">
@@ -68,7 +74,16 @@
 
         <div class="col-lg-6">
             <label for="tipoSangre" class="form-label">Tipo de Sangre:</label>
-            <input type="text" id="tipoSangre" th:field="*{tipoSangre}" class="form-control" />
+            <select id="tipoSangre" th:field="*{tipoSangre}" class="form-select">
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
         </div>
 
         <div class="col-lg-6">
@@ -95,16 +110,17 @@
                 <option value="viudo">Viudo</option>
             </select>
         </div>
-
-        <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+        <div class="d-flex justify-content-center">
+            <div class="text-center me-3">
+                <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+            </div>
+            <div class="text-center d-inline"  sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{eliminar(id=${paciente.id})}">
+                    <button class="btn btn-danger">Eliminar Paciente</button>
+                </a>
+            </div>
         </div>
     </form>
-    <div class="col-12 text-center mt-3">
-        <a th:href="@{eliminar(id=${paciente.id})}">
-            <button class="btn btn-danger">Eliminar Paciente</button>
-        </a>
-    </div>
 </section>
 </body>
 </html>

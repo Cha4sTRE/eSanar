@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/enf")
-@PreAuthorize("hasRole('ENF')")
+@PreAuthorize("hasAnyRole('ENF','ADMIN')")
 public class EnfController {
 
     private final PacienteService pacienteServiceImpl;

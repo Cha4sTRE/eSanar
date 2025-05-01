@@ -19,13 +19,13 @@
                 <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
             </a>
         </div>
-        <div class="col-mb-10">
-            <table class="table table-stripped">
+        <div class="table-responsive-md">
+            <table class="table table-hover">
                 <thead>
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Motivo</th>
-                    <th>Editar</th>
+                    <th>Editar/Exportar</th>
                 </thead>
                 <tbody>
                     <div th:if="${!consultas.consultas.isEmpty()}">
@@ -33,7 +33,18 @@
                             <td th:text="${consulta.id}"></td>
                             <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
                             <td th:text="${consulta.motivoConsulta}"></td>
-                            <td><a th:href="@{/consulta/historia/}+@{${consulta.historiaClinica.id}(consulta=${consulta.id})}">editar</a></td>
+                            <td class="d-flex justify-content-start">
+                                <a th:href="@{/consulta/historia/}+@{${consulta.historiaClinica.id}(consulta=${consulta.id})}">
+                                    <button class="btn me-1" style="background-color: lightgreen">
+                                        <i class="bi bi-pen"></i>
+                                    </button>
+                                </a>
+                                <a th:href="@{/consulta/exportarInforme(consulta=${consulta.id})}">
+                                    <button type="button" class="btn btn-primary mb-3">
+                                        <i class="bi bi-file-earmark-pdf-fill"></i>
+                                    </button>
+                                </a>
+                            </td>
                         </tr>
                     </div>
                 </tbody>

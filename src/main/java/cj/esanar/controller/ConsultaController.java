@@ -8,6 +8,8 @@ import cj.esanar.service.ConsultaService;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.implement.CustomUserDetailsService;
 import cj.esanar.service.implement.UserDetailServiceImpl;
+import cj.esanar.util.reports.ConsultaPdf;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -47,7 +50,6 @@ public class ConsultaController {
         model.addAttribute("formatoHora", formato);
         return "consulta/historias";
     }
-
 
     @GetMapping("/nueva")
     public String nueva(ConsultaEntity consulta,@RequestParam HistoriaEntity historiaId, Model model) {
@@ -77,6 +79,21 @@ public class ConsultaController {
         return "consulta/consulta-form";
     }
 
+    @GetMapping("/exportarInforme")
+    public void exportarInforme(@RequestParam ConsultaEntity consulta, HttpServletResponse response) throws IOException {
+
+       response.setContentType("application/pdf");
+       DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
+       String fecha= formato.format(consulta.getFechaHoraAtencion());
+
+       String cabecera= "Content-Disposition";
+       String valor="attachment; filename=Consulta_"+fecha+".pdf";
+       response.setHeader(cabecera,valor);
+       ConsultaEntity consultapdf= consultaService.consultaPorId(consulta);
+       ConsultaPdf exportar= new ConsultaPdf(consultapdf);
+       exportar.export(response);
+    }
+
     @PostMapping("/agregar")
     public String agregar(@Valid ConsultaEntity consulta, @RequestParam("idHistoria") Long idHistoria, @RequestParam LocalDateTime fechaHora, Errors errors) {
         if(errors.hasErrors()) {
@@ -98,5 +115,6 @@ public class ConsultaController {
         consultaService.guardarConsulta(consulta);
         return "redirect:/consulta/historias/"+hPaciente.getPaciente().getNombre()+"?"+"id="+hPaciente.getId();
     }
+
 
 }

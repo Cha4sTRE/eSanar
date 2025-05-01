@@ -9,6 +9,7 @@
 <body>
 <section class="container mt-5" layout:fragment="content">
 
+
     <form th:action="@{/consulta/agregar}" th:object="${consulta}" method="post" class="row g-3">
 
         <input type="hidden" th:field="*{id}">
@@ -68,11 +69,7 @@
             <button type="submit" class="btn btn-primary">Guardar Consulta</button>
         </div>
     </form>
-    <!--<div class="col-12 text-center mt-3">
-        <a th:href="@{eliminar(id=${paciente.id})}">
-            <button class="btn btn-danger">Eliminar Paciente</button>
-        </a>
-    </div>-->
+
 </section>
 
 </body>
