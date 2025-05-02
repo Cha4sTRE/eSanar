@@ -1,10 +1,14 @@
 package cj.esanar.controller;
 
 
+import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
+import cj.esanar.util.reports.ExportarConsultaPdf;
+import cj.esanar.util.reports.ExportarPacientesExel;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,9 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,6 +95,21 @@ public class EnfController {
         return "redirect:/enf/";
     }
 
+    @GetMapping("paciente/ExportarExcel")
+    public void exportarExcel(HttpServletResponse response) throws IOException {
 
+        List<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes();
+
+        response.setContentType("application/octec-stream");
+        DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
+        String fecha= formato.format(LocalDateTime.now());
+
+        String cabecera= "Content-Disposition";
+        String valor="attachment; filename=Consulta_"+fecha+".xlsx";
+        response.setHeader(cabecera,valor);
+        ExportarPacientesExel exportar= new ExportarPacientesExel(pacientes);
+        exportar.exportar(response);
+
+    }
 
 }

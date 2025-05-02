@@ -10,9 +10,12 @@
 
 <section layout:fragment="content">
     <div class="col-lg-7">
-        <div class="col-md-3 mb-4">
+        <div class="col-md-6 mb-4 d-flex justify-content-center align-items-center">
             <a th:href="@{paciente/nuevo}">
                 <button class="btn" style="background-color: lightgreen">Nuevo Paciente</button>
+            </a>
+            <a th:href="@{paciente/ExportarExcel}">
+                <button class="btn ms-3" style="background-color: lightgreen">Exportar Pacientes</button>
             </a>
         </div>
         <div class="table-responsive-md">

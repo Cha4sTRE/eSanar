@@ -3,27 +3,23 @@ package cj.esanar.controller;
 import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.UserEntity;
-import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.ConsultaService;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.implement.CustomUserDetailsService;
 import cj.esanar.service.implement.UserDetailServiceImpl;
-import cj.esanar.util.reports.ConsultaPdf;
+import cj.esanar.util.reports.ExportarConsultaPdf;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -90,7 +86,7 @@ public class ConsultaController {
        String valor="attachment; filename=Consulta_"+fecha+".pdf";
        response.setHeader(cabecera,valor);
        ConsultaEntity consultapdf= consultaService.consultaPorId(consulta);
-       ConsultaPdf exportar= new ConsultaPdf(consultapdf);
+       ExportarConsultaPdf exportar= new ExportarConsultaPdf(consultapdf);
        exportar.export(response);
     }
 

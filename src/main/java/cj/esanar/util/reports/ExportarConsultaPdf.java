@@ -13,7 +13,7 @@ import java.awt.*;
 import java.io.IOException;
 
 @AllArgsConstructor
-public class ConsultaPdf {
+public class ExportarConsultaPdf {
 
     ConsultaEntity consulta;
 
