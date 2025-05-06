@@ -4,8 +4,9 @@ import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.persistence.repository.PacienteRepository;
 import cj.esanar.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -20,6 +21,11 @@ public class PacienteServiceImpl implements PacienteService {
     @Override
     public List<PacienteEntity> listaPacientes() {
         return (List<PacienteEntity>) pacienteRepository.findAll();
+    }
+
+    @Override
+    public Page<PacienteEntity> listaPacientes(Pageable pageable) {
+        return pacienteRepository.findAll(pageable);
     }
 
     @Override

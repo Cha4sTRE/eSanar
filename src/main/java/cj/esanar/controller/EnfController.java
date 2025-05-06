@@ -1,16 +1,17 @@
 package cj.esanar.controller;
 
 
-import cj.esanar.persistence.entity.ConsultaEntity;
 import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
-import cj.esanar.util.reports.ExportarConsultaPdf;
 import cj.esanar.util.reports.ExportarPacientesExel;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 
@@ -37,9 +36,11 @@ public class EnfController {
     private final HistoriaService historiaServiceImpl;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model,@RequestParam(name = "page",defaultValue ="0")int page) {
 
-        List<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes();
+        Pageable pageable = PageRequest.of(page, 10);
+
+        Page<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes(pageable);
         model.addAttribute("pacientes", pacientes);
         return "enf/home";
     }
