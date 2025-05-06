@@ -5,6 +5,7 @@ import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
+import cj.esanar.util.pagination.PageRender;
 import cj.esanar.util.reports.ExportarPacientesExel;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -38,9 +39,12 @@ public class EnfController {
     @GetMapping("/")
     public String home(Model model,@RequestParam(name = "page",defaultValue ="0")int page) {
 
-        Pageable pageable = PageRequest.of(page, 6);
+        Pageable pageable = PageRequest.of(page, 10);
 
         Page<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes(pageable);
+        PageRender<PacienteEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
+
+        model.addAttribute("page",pacientesRender);
         model.addAttribute("pacientes", pacientes);
         return "enf/home";
     }
