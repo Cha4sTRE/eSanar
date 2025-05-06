@@ -16,9 +16,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
-
+/*
 @AllArgsConstructor
-@Component
 public class DataInitializer implements CommandLineRunner {
 
     private final PacienteService pacienteService;
@@ -226,8 +225,8 @@ public class DataInitializer implements CommandLineRunner {
         historia3.agregarConsultas(consulta3);
         historia4.agregarConsultas(consulta4);
         consultaService.guardarConsultas(List.of(consulta1,consulta2,consulta3,consulta4));
-        //historiaService.guardaHistoria(historia1); <- no guardar porque historia ya lo guarda
 
 
     }
 }
+*/

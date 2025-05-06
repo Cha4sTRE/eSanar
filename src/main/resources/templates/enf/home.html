@@ -9,55 +9,78 @@
 <body>
 
 <section layout:fragment="content">
-    <div class="col-lg-7">
-        <div class="col-md-6 mb-4 d-flex justify-content-center align-items-center">
-            <a th:href="@{paciente/nuevo}">
-                <button class="btn" style="background-color: lightgreen">Nuevo Paciente</button>
-            </a>
-            <a th:href="@{paciente/ExportarExcel}">
-                <button class="btn ms-3" style="background-color: lightgreen">Exportar Pacientes</button>
-            </a>
+        <div class="col-lg-12">
+            <div class="col-md-6 mb-4 d-flex justify-content-start align-items-center">
+                <a th:href="@{paciente/nuevo}">
+                    <button class="btn" style="background-color: lightgreen">
+                        Nuevo Paciente
+                    </button>
+                </a>
+                <a th:href="@{paciente/ExportarExcel}">
+                    <button class="btn ms-3" style="background-color: lightgreen">
+                        Exportar Pacientes
+                    </button>
+                </a>
+            </div>
+            <div th:if="${!pacientes.isEmpty()}">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="table-responsive-md">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Correo</th>
+                                    <th>cedula</th>
+                                    <th>Telefono</th>
+                                    <th>Editar/Historia</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="paciente:${pacientes}">
+                                    <td th:text="${paciente.id}"></td>
+                                    <td th:text="${paciente.nombre}"></td>
+                                    <td th:text="${paciente.apellido}"></td>
+                                    <td th:text="${paciente.correo}"></td>
+                                    <td th:text="${paciente.identificacion}"></td>
+                                    <td th:text="${paciente.telefono}"></td>
+                                    <td class="d-flex justify-content-center">
+                                        <a th:href="@{paciente/}+@{${paciente.nombre}(id=${paciente.id},historia=${paciente.historiaEntity.id})}">
+                                            <button class="btn btn-primary me-1">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/consulta/historias/}+@{${paciente.nombre}(id=${paciente.historiaEntity.id})}"
+                                           class="me-2">
+                                            <button class="btn" style="background-color: lightgreen">
+                                                <i class="bi bi-clipboard-heart-fill"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <nav th:replace="loyaut/paginator::paginator"></nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-5">
+                        <div class="card border-dark h-75 mb-3 p-4 d-flex justify-content-center align-items-center">
+                            <h3>Total de Pacientes: </h3>
+                            <div class="d-flex">
+                                <h4><i class="me-2 bi bi-people-fill"></i></h4>
+                                <h4 th:text="${pacientes.size()}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="table-responsive-md">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>cedula</th>
-                    <th>Telefono</th>
-                    <th>Editar/Historia</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="paciente:${pacientes}">
-                    <td th:text="${paciente.id}"></td>
-                    <td th:text="${paciente.nombre}"></td>
-                    <td th:text="${paciente.apellido}"></td>
-                    <td th:text="${paciente.correo}"></td>
-                    <td th:text="${paciente.identificacion}"></td>
-                    <td th:text="${paciente.telefono}"></td>
-                    <td class="d-flex justify-content-center">
-                        <a th:href="@{paciente/}+@{${paciente.nombre}(id=${paciente.id},historia=${paciente.historiaEntity.id})}">
-                            <button class="btn btn-primary me-1">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                        </a>
-                        <a th:href="@{/consulta/historias/}+@{${paciente.nombre}(id=${paciente.historiaEntity.id})}" class="me-2">
-                            <button class="btn" style="background-color: lightgreen">
-                                <i class="bi bi-clipboard-heart-fill"></i>
-                            </button>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
+    <div th:if="${pacientes.isEmpty()}">
+            <p>No hay pacientes Registrados</p>
         </div>
     </div>
-
 </section>
 
 </body>
