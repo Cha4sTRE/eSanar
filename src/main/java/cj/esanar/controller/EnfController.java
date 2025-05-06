@@ -38,7 +38,7 @@ public class EnfController {
     @GetMapping("/")
     public String home(Model model,@RequestParam(name = "page",defaultValue ="0")int page) {
 
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 6);
 
         Page<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes(pageable);
         model.addAttribute("pacientes", pacientes);
