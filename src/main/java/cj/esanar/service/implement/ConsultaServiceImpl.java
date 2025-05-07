@@ -23,6 +23,16 @@ public class ConsultaServiceImpl implements ConsultaService {
         return (Set<ConsultaEntity>) consultaRepository.findAll();
     }
 
+    @Override
+    public Page<ConsultaEntity> listaConsultas(Pageable pageable,Long id) {
+        return consultaRepository.findAllById(pageable,id);
+    }
+
+    @Override
+    public Page<ConsultaEntity> listaConsultas(Pageable pageable,Long id, String filtros) {
+        return consultaRepository.findAllById(pageable,id, filtros);
+    }
+
 
     @Override
     public void guardarConsulta(ConsultaEntity consulta) {

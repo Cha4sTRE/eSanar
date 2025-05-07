@@ -12,7 +12,8 @@ public interface ConsultaService {
 
    Set<ConsultaEntity> listaConsultas();
 
-
+   Page<ConsultaEntity> listaConsultas(Pageable pageable, Long id);
+   Page<ConsultaEntity> listaConsultas(Pageable pageable,Long id,String filtros);
    void guardarConsulta(ConsultaEntity consulta);
    void guardarConsultas(List<ConsultaEntity> consultas);
    ConsultaEntity consultaPorId(ConsultaEntity consulta);

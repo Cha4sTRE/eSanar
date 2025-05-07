@@ -12,24 +12,26 @@
     <div class="col-lg-7">
         <div class="col-md-7 mb-4">
             <h1 th:text="'Historial de Consultas de ' +${pacienteNombre}" class="mb-3"></h1>
-            <div th:if="${consultas.consultas.isEmpty()}">
+            <div th:if="${consultas.isEmpty()}">
                 <p>El paciente aún no tiene consultas</p>
             </div>
-            <a th:href="@{/consulta/nueva(historiaId=${consultas.id})}">
+            <a th:href="@{/consulta/nueva(historiaId=${historia.id})}">
                 <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
             </a>
         </div>
-        <div class="table-responsive-md">
-            <table class="table table-hover">
-                <thead>
+        <div th:if="${!consultas.isEmpty()}">
+            <div class="table-responsive-md">
+                <form th:replace="loyaut/filtro-consultas::filtro"></form>
+                <table class="table table-hover">
+                    <thead>
                     <th>id</th>
                     <th>Fecha</th>
                     <th>Motivo</th>
                     <th>Editar/Exportar</th>
-                </thead>
-                <tbody>
-                    <div th:if="${!consultas.consultas.isEmpty()}">
-                        <tr th:each="consulta:${consultas.consultas}">
+                    </thead>
+                    <tbody>
+                    <div th:if="${!consultas.isEmpty()}">
+                        <tr th:each="consulta:${consultas}">
                             <td th:text="${consulta.id}"></td>
                             <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
                             <td th:text="${consulta.motivoConsulta}"></td>
@@ -47,8 +49,10 @@
                             </td>
                         </tr>
                     </div>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+                <nav th:replace="loyaut/paginator::paginator"></nav>
+            </div>
         </div>
     </div>
 

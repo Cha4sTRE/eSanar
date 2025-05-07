@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="">
+    <form method="get" th:action="@{/consulta/historias/}+@{${pacienteNombre}}" class="row g-3 align-items-center" th:fragment="filtro">
+        <div class="col-auto">
+            <label class="form-label">Filtrar por: </label>
+        </div>
+        <div class="col-auto">
+            <input type="hidden" name="id" th:value="${historia.id}">
+            <input class="form-control" type="text" name="filtro" placeholder="motivo, fecha, diagnostico">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

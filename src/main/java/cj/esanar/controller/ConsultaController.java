@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 @AllArgsConstructor
 
@@ -41,11 +42,26 @@ public class ConsultaController {
 
 
     @GetMapping("/historias/{nombre}")
-    public String historias(Model model, HistoriaEntity historia, @PathVariable String nombre) {
+    public String historias(Model model,HistoriaEntity historia,@RequestParam(name = "page",defaultValue = "0")int page,
+                            @PathVariable String nombre, @RequestParam(name = "filtro",defaultValue = "all")String filtro) {
+
 
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        HistoriaEntity consultasHistoria= historiaService.buscaHistoria(historia.getId());
+        Pageable pageable = PageRequest.of(page, 3);
+        Page<ConsultaEntity> consultaPage;
+        if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
+            consultaPage = consultaService.listaConsultas(pageable, consultasHistoria.getId());
+        } else {
+            consultaPage = consultaService.listaConsultas(pageable, consultasHistoria.getId(), filtro);
+        }
 
-        model.addAttribute("consultas", historiaService.buscaHistoria(historia.getId()));
+        PageRender<ConsultaEntity> consultaRender= new PageRender<>("/consulta/historias/"+nombre+"?id="+historia.getId(),consultaPage);
+
+
+        model.addAttribute("historia",consultasHistoria);
+        model.addAttribute("consultas", consultaPage);
+        model.addAttribute("page",consultaRender);
         model.addAttribute("pacienteNombre", nombre);
         model.addAttribute("formatoHora", formato);
         return "consulta/historias";

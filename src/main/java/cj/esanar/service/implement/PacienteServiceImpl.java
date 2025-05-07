@@ -33,7 +33,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Override
     public List<PacienteEntity> listaPacientes() {
-        return List.of();
+        return pacienteRepository.findAll();
     }
 
     @Override
