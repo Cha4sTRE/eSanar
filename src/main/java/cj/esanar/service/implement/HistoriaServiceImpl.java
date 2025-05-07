@@ -4,6 +4,8 @@ import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.repository.HistoriaRepository;
 import cj.esanar.service.HistoriaService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class HistoriaServiceImpl implements HistoriaService {
     public List<HistoriaEntity> listaHistorias() {
         return (List<HistoriaEntity>) historiaRepository.findAll();
     }
+
 
     @Override
     public void guardaHistoria(HistoriaEntity historia) {

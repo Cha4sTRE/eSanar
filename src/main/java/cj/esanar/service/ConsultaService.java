@@ -1,6 +1,8 @@
 package cj.esanar.service;
 
 import cj.esanar.persistence.entity.ConsultaEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Set;
@@ -9,6 +11,8 @@ import java.util.Set;
 public interface ConsultaService {
 
    Set<ConsultaEntity> listaConsultas();
+
+
    void guardarConsulta(ConsultaEntity consulta);
    void guardarConsultas(List<ConsultaEntity> consultas);
    ConsultaEntity consultaPorId(ConsultaEntity consulta);

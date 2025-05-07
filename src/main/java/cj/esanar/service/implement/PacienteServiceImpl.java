@@ -19,13 +19,21 @@ public class PacienteServiceImpl implements PacienteService {
     private PacienteRepository pacienteRepository;
 
     @Override
-    public List<PacienteEntity> listaPacientes() {
-        return (List<PacienteEntity>) pacienteRepository.findAll();
+    public Page<PacienteEntity> listaPacientes(Pageable page,String filtro) {
+        if(filtro!=null||filtro==""){
+            return pacienteRepository.findByfilter(page, filtro);
+        }
+        return listaPacientes(page);
     }
 
     @Override
     public Page<PacienteEntity> listaPacientes(Pageable pageable) {
         return pacienteRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<PacienteEntity> listaPacientes() {
+        return List.of();
     }
 
     @Override

@@ -25,6 +25,7 @@
             <div th:if="${!pacientes.isEmpty()}">
                 <div class="row">
                     <div class="col-lg-8">
+                        <form th:replace="loyaut/filtro::filtro"></form>
                         <div class="table-responsive-md">
                             <table class="table table-hover">
                                 <thead>

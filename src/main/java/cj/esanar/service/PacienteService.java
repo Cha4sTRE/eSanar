@@ -10,6 +10,7 @@ public interface PacienteService {
 
     List<PacienteEntity> listaPacientes();
 
+    Page<PacienteEntity> listaPacientes(Pageable pageable,String filtro);
     Page<PacienteEntity> listaPacientes(Pageable pageable);
     PacienteEntity findPacienteById(PacienteEntity paciente);
     void guardaPaciente(PacienteEntity paciente);

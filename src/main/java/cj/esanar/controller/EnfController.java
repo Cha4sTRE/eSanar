@@ -37,11 +37,11 @@ public class EnfController {
     private final HistoriaService historiaServiceImpl;
 
     @GetMapping("/")
-    public String home(Model model,@RequestParam(name = "page",defaultValue ="0")int page) {
+    public String home(Model model,@RequestParam(name = "page",defaultValue ="0") int page,@RequestParam(name = "filtro",defaultValue = "all")String filtro) {
 
         Pageable pageable = PageRequest.of(page, 10);
-
-        Page<PacienteEntity> pacientes= pacienteServiceImpl.listaPacientes(pageable);
+        Page<PacienteEntity> pacientes;
+        pacientes= (filtro.equals("all") ? pacienteServiceImpl.listaPacientes(pageable): pacienteServiceImpl.listaPacientes(pageable,filtro));
         PageRender<PacienteEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
 
         model.addAttribute("page",pacientesRender);
