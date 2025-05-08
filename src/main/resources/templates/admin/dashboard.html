@@ -13,7 +13,7 @@
     <div class="mt-3">
         <h4>Usuarios Actuales</h4>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-8">
                 <div class="alert alert-success" th:if="${param.exito}">Registro exitoso</div>
                 <div class="table-responsive-md">
                     <table class="table table-striped border rounded-1">
@@ -23,7 +23,8 @@
                             <th>correo</th>
                             <th>telefono</th>
                             <th>Rol</th>
-                            <th>Habilitado</th>
+                            <th>Permisos</th>
+                            <th>Habilitar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,15 @@
                                 <div th:each="rol:${listaRoles}">
                                     <div th:if="${role.id==rol.id}">
                                         <span th:text="${rol.name}"></span>
+                                    </div>
+                                </div>
+                            </th>
+                            <th th:each="role:${user.roles}">
+                                <div th:each="rol:${listaRoles}">
+                                    <div th:if="${role.id==rol.id}">
+                                        <ul th:each="permisos:${rol.listaPermisos}" class="list-unstyled d-inline">
+                                            <li th:text="${permisos.name}"></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </th>

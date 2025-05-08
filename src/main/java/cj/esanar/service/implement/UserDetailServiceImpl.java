@@ -36,12 +36,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public List<UserEntity> getAllUsers() {
         return (List<UserEntity>) userRepository.findAll();
     }
-    public UserEntity finById(Long id) {
+    public UserEntity getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
     public void saveUser(UserEntity userEntity) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
+    }
+    public void findById(Long id) {
+        userRepository.findById(id).orElse(null);
+    }
+    public void deleteUser(UserEntity userEntity) {
+        userRepository.deleteById(userEntity.getId());
     }
 
 }

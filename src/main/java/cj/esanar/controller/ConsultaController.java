@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,7 @@ public class ConsultaController {
 
         DateTimeFormatter formato= DateTimeFormatter.ofPattern("yyyy-MM-dd");
         HistoriaEntity consultasHistoria= historiaService.buscaHistoria(historia.getId());
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 6, Sort.by("id").ascending());
         Page<ConsultaEntity> consultaPage;
         if (filtro == null || filtro.isBlank() || filtro.equals("all")) {
             consultaPage = consultaService.listaConsultas(pageable, consultasHistoria.getId());
@@ -118,7 +119,7 @@ public class ConsultaController {
         }
         Authentication auth= SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetailsService enfUser= (CustomUserDetailsService) auth.getPrincipal();
-        UserEntity enf= userDetailService.finById(enfUser.getId());
+        UserEntity enf= userDetailService.getById(enfUser.getId());
 
         consulta.setEnfermera(enf);
         consulta.setFechaHoraAtencion(fechaHora);

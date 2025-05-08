@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
-/*
+@Component
 @AllArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
@@ -32,7 +32,6 @@ public class DataInitializer implements CommandLineRunner {
         PermissionsEntity readPermission = PermissionsEntity.builder().name("READ").build();
         PermissionsEntity deletePermission = PermissionsEntity.builder().name("DELETE").build();
         PermissionsEntity updatePermission = PermissionsEntity.builder().name("UPDATE").build();
-        PermissionsEntity refactorePermission = PermissionsEntity.builder().name("REFACTOR").build();
 
         RoleEntity admin= RoleEntity.builder()
                 .name(ERole.ADMIN)
@@ -40,7 +39,15 @@ public class DataInitializer implements CommandLineRunner {
                 .build();
         RoleEntity enfRole= RoleEntity.builder()
                 .name(ERole.ENF)
-                .listaPermisos(Set.of(createPermission, readPermission, deletePermission, updatePermission))
+                .listaPermisos(Set.of(createPermission, readPermission))
+                .build();
+        RoleEntity noPermiss= RoleEntity.builder()
+                .name(ERole.ENF)
+                .listaPermisos(Set.of(readPermission))
+                .build();
+        RoleEntity medicRole= RoleEntity.builder()
+                .name(ERole.ENF)
+                .listaPermisos(Set.of(createPermission, readPermission, updatePermission))
                 .build();
 
         UserEntity userAdmin= UserEntity.builder()
@@ -54,9 +61,9 @@ public class DataInitializer implements CommandLineRunner {
                 .isCredentialsNonExpired(true)
                 .roles(Set.of(admin))
                 .build();
-        UserEntity userEnf= UserEntity.builder()
-                .username("angelica")
-                .password(passwordEncoder.encode("camila123"))
+        UserEntity userEnf1= UserEntity.builder()
+                .username("Wilson")
+                .password(passwordEncoder.encode("wilson123"))
                 .email("angelica.gaitan.duran@gmail.com")
                 .telefono(3229433138L)
                 .isAccountNonExpired(true)
@@ -65,7 +72,29 @@ public class DataInitializer implements CommandLineRunner {
                 .isCredentialsNonExpired(true)
                 .roles(Set.of(enfRole))
                 .build();
-        userRepository.saveAll(List.of(userAdmin,userEnf));
+        UserEntity userEnf2= UserEntity.builder()
+                .username("angelica")
+                .password(passwordEncoder.encode("camila123"))
+                .email("angelica.gaitan.duran@gmail.com")
+                .telefono(3229433138L)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .roles(Set.of(medicRole))
+                .build();
+        UserEntity userEnf4= UserEntity.builder()
+                .username("cristian")
+                .password(passwordEncoder.encode("cristian123"))
+                .email("angelica.gaitan.duran@gmail.com")
+                .telefono(3229433138L)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .roles(Set.of(noPermiss))
+                .build();
+        userRepository.saveAll(List.of(userAdmin,userEnf1,userEnf2,userEnf4));
         PacienteEntity paciente1 = PacienteEntity.builder()
                 .nombre("david")
                 .apellido("aceros")
@@ -151,7 +180,7 @@ public class DataInitializer implements CommandLineRunner {
                 build();
         historiaService.guardaHistorias(List.of(historia1,historia2,historia3,historia4));
         ConsultaEntity consulta1= ConsultaEntity.builder()
-                .enfermera(userEnf)
+                .enfermera(userEnf2)
                 .historiaClinica(historia1)
                 .diagnosticoPrincipal("Fiebre")
                 .motivoConsulta("Dolor de cabeza y fiebre alta")
@@ -168,7 +197,7 @@ public class DataInitializer implements CommandLineRunner {
                 .horaFinal(LocalTime.of(11, 0))
                 .build();
         ConsultaEntity consulta2= ConsultaEntity.builder()
-                .enfermera(userEnf)
+                .enfermera(userEnf1)
                 .historiaClinica(historia2)
                 .diagnosticoPrincipal("anemia")
                 .motivoConsulta("Dolor de cabeza y fiebre alta")
@@ -185,7 +214,7 @@ public class DataInitializer implements CommandLineRunner {
                 .horaFinal(LocalTime.of(11, 0))
                 .build();
         ConsultaEntity consulta3= ConsultaEntity.builder()
-                .enfermera(userEnf)
+                .enfermera(userEnf1)
                 .historiaClinica(historia3)
                 .diagnosticoPrincipal("resfriado")
                 .motivoConsulta("Dolor de cabeza y fiebre alta")
@@ -202,7 +231,7 @@ public class DataInitializer implements CommandLineRunner {
                 .horaFinal(LocalTime.of(11, 0))
                 .build();
         ConsultaEntity consulta4= ConsultaEntity.builder()
-                .enfermera(userEnf)
+                .enfermera(userEnf1)
                 .historiaClinica(historia4)
                 .diagnosticoPrincipal("tuberculosis")
                 .motivoConsulta("Dolor de cabeza y fiebre alta")
@@ -229,4 +258,3 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 }
-*/

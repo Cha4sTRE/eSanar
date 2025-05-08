@@ -5,6 +5,7 @@ import cj.esanar.persistence.entity.HistoriaEntity;
 import cj.esanar.persistence.entity.PacienteEntity;
 import cj.esanar.service.HistoriaService;
 import cj.esanar.service.PacienteService;
+import cj.esanar.service.implement.CustomUserDetailsService;
 import cj.esanar.util.pagination.PageRender;
 import cj.esanar.util.reports.ExportarPacientesExel;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,7 +14,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -35,17 +40,25 @@ public class EnfController {
 
     private final PacienteService pacienteServiceImpl;
     private final HistoriaService historiaServiceImpl;
+    private UserDetailsService userDetailsService;
 
     @GetMapping("/")
     public String home(Model model,@RequestParam(name = "page",defaultValue ="0") int page,@RequestParam(name = "filtro",defaultValue = "all")String filtro) {
 
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("id").ascending());
         Page<PacienteEntity> pacientes;
         pacientes= (filtro.equals("all") ? pacienteServiceImpl.listaPacientes(pageable): pacienteServiceImpl.listaPacientes(pageable,filtro));
         PageRender<PacienteEntity> pacientesRender= new PageRender<>("/enf/",pacientes);
 
+        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetailsService userAuth= (CustomUserDetailsService) auth.getPrincipal();
+
+        LocalDateTime time= LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm dd/MM/yyyy");
         model.addAttribute("page",pacientesRender);
         model.addAttribute("pacientes", pacientes);
+        model.addAttribute("userAuth", userAuth);
+        model.addAttribute("time", formatter.format(time));
         return "enf/home";
     }
 
