@@ -1,6 +1,7 @@
 package cj.esanar.config;
 
 import cj.esanar.persistence.entity.*;
+import cj.esanar.persistence.repository.RoleRepository;
 import cj.esanar.persistence.repository.UserRepository;
 import cj.esanar.service.ConsultaService;
 import cj.esanar.service.HistoriaService;
@@ -16,12 +17,12 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
-@Component
 @AllArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
     private final PacienteService pacienteService;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final HistoriaService historiaService;
     private final ConsultaService consultaService;
@@ -42,14 +43,13 @@ public class DataInitializer implements CommandLineRunner {
                 .listaPermisos(Set.of(createPermission, readPermission))
                 .build();
         RoleEntity noPermiss= RoleEntity.builder()
-                .name(ERole.ENF)
+                .name(ERole.VISITOR)
                 .listaPermisos(Set.of(readPermission))
                 .build();
         RoleEntity medicRole= RoleEntity.builder()
-                .name(ERole.ENF)
+                .name(ERole.MEDIC)
                 .listaPermisos(Set.of(createPermission, readPermission, updatePermission))
                 .build();
-
         UserEntity userAdmin= UserEntity.builder()
                 .username("jeffer")
                 .password(passwordEncoder.encode("milluh123"))
@@ -59,20 +59,9 @@ public class DataInitializer implements CommandLineRunner {
                 .isAccountNonLocked(true)
                 .isEnabled(true)
                 .isCredentialsNonExpired(true)
-                .roles(Set.of(admin))
+                .roles(Set.of(admin,enfRole,noPermiss,medicRole))
                 .build();
-        UserEntity userEnf1= UserEntity.builder()
-                .username("Wilson")
-                .password(passwordEncoder.encode("wilson123"))
-                .email("angelica.gaitan.duran@gmail.com")
-                .telefono(3229433138L)
-                .isAccountNonExpired(true)
-                .isAccountNonLocked(true)
-                .isEnabled(true)
-                .isCredentialsNonExpired(true)
-                .roles(Set.of(enfRole))
-                .build();
-        UserEntity userEnf2= UserEntity.builder()
+        UserEntity userMedic= UserEntity.builder()
                 .username("angelica")
                 .password(passwordEncoder.encode("camila123"))
                 .email("angelica.gaitan.duran@gmail.com")
@@ -83,10 +72,10 @@ public class DataInitializer implements CommandLineRunner {
                 .isCredentialsNonExpired(true)
                 .roles(Set.of(medicRole))
                 .build();
-        UserEntity userEnf4= UserEntity.builder()
-                .username("cristian")
-                .password(passwordEncoder.encode("cristian123"))
-                .email("angelica.gaitan.duran@gmail.com")
+        UserEntity visitante= UserEntity.builder()
+                .username("John Doe")
+                .password(passwordEncoder.encode("john123"))
+                .email("john@gmail.com")
                 .telefono(3229433138L)
                 .isAccountNonExpired(true)
                 .isAccountNonLocked(true)
@@ -94,8 +83,23 @@ public class DataInitializer implements CommandLineRunner {
                 .isCredentialsNonExpired(true)
                 .roles(Set.of(noPermiss))
                 .build();
-        userRepository.saveAll(List.of(userAdmin,userEnf1,userEnf2,userEnf4));
-        PacienteEntity paciente1 = PacienteEntity.builder()
+        UserEntity userEnf= UserEntity.builder()
+                .username("Wilson")
+                .password(passwordEncoder.encode("wilson123"))
+                .email("wilson@gmail.com")
+                .telefono(3229433138L)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isEnabled(true)
+                .isCredentialsNonExpired(true)
+                .roles(Set.of(enfRole))
+                .build();
+        userRepository.save(userAdmin);
+        userAdmin.setRoles(Set.of(admin));
+        userRepository.save(userAdmin);
+
+        //userRepository.saveAll(Set.of(userAdmin,userMedic,visitante,userEnf));
+        /*PacienteEntity paciente1 = PacienteEntity.builder()
                 .nombre("david")
                 .apellido("aceros")
                 .tipoDocumento("cedula de ciudadania")
@@ -253,7 +257,7 @@ public class DataInitializer implements CommandLineRunner {
         historia2.agregarConsultas(consulta2);
         historia3.agregarConsultas(consulta3);
         historia4.agregarConsultas(consulta4);
-        consultaService.guardarConsultas(List.of(consulta1,consulta2,consulta3,consulta4));
+        consultaService.guardarConsultas(List.of(consulta1,consulta2,consulta3,consulta4));*/
 
 
     }

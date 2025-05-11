@@ -4,6 +4,7 @@ public enum ERole {
 
     ADMIN,
     ENF,
-    USER
+    MEDIC,
+    VISITOR,
 
 }

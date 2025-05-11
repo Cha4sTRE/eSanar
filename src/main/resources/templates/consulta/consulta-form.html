@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{loyaut/plantilla}">
 <head>
     <meta charset="UTF-8">
@@ -65,8 +66,11 @@
             <label for="exudadoNivel" class="form-label">Nivel de exudado: </label>
             <input type="text" id="exudadoNivel" th:field="*{exudadoNivel}" class="form-control" />
         </div>
-        <div class="col-12 text-center">
+        <div class="col-12 text-center" th:if="${param.historiaId}" sec:authorize="hasAuthority('CREATE')">
             <button type="submit" class="btn btn-primary">Guardar Consulta</button>
+        </div>
+        <div class="col-12 text-center" th:if="${param.consulta}" sec:authorize="hasAuthority('UPDATE')">
+            <button type="submit" class="btn btn-primary">Actualizar Consulta</button>
         </div>
     </form>
 

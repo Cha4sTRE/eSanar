@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 @Entity
 @Table(name = "permissions")
 public class PermissionsEntity {
@@ -16,7 +17,11 @@ public class PermissionsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true,updatable = false)
+    @Column(nullable = false, unique = false,updatable = false)
     private String name;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

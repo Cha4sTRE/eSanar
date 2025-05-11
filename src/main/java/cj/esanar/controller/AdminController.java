@@ -1,8 +1,6 @@
 package cj.esanar.controller;
 
 
-import cj.esanar.persistence.entity.PermissionsEntity;
-import cj.esanar.persistence.entity.RoleEntity;
 import cj.esanar.persistence.entity.UserEntity;
 import cj.esanar.persistence.repository.PermissionsRepository;
 import cj.esanar.persistence.repository.RoleRepository;
@@ -11,7 +9,6 @@ import cj.esanar.service.implement.UserDetailServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +18,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -57,28 +52,9 @@ public class AdminController {
         return "admin/registro";
     }
 
-    @GetMapping("/eliminarRegistro")
-    public String eliminarRegistro(@RequestParam("id") Long id) {
-        Optional<UserEntity> userOptional = Optional.ofNullable(userDetailService.getById(id));
-        if (userOptional.isPresent()) {
-            UserEntity user = userOptional.get();
-
-            // Si necesitas eliminar permisos específicos, hazlo aquí, por ejemplo:
-            for (RoleEntity rol : user.getRoles()) {
-                rol.setListaPermisos(null); // o permisos.clear() si ya están cargados
-            }
-
-            userDetailService.deleteUser(user);
-        }
-
-        return "redirect:/admin/";
-    }
-
-
 
     @PostMapping("/guardarRegistro")
-    public String guardarRegistro(@Valid @ModelAttribute("usuario") UserEntity usuario,
-                                  @RequestParam(name = "permisos",required = false) Set<String> permisosSeleccionados, Errors errors){
+    public String guardarRegistro(@Valid @ModelAttribute("usuario") UserEntity usuario, Errors errors){
         if(errors.hasErrors()){
             System.out.println("Errores en la validación: " + errors.getAllErrors());
             return "admin/registro";
@@ -89,16 +65,6 @@ public class AdminController {
         usuario.setAccountNonExpired(true);
         usuario.setCredentialsNonExpired(true);
 
-        Set<PermissionsEntity> permisos = new HashSet<>();
-        if (permisosSeleccionados != null) {
-            for (String nombrePermiso : permisosSeleccionados) {
-                permissionsRepository.findByName(nombrePermiso).ifPresent(permisos::add);
-            }
-        }
-
-        for (RoleEntity role : usuario.getRoles()) {
-            role.setListaPermisos(permisos);
-        }
 
         userDetailService.saveUser(usuario);
         return "redirect:/admin/";

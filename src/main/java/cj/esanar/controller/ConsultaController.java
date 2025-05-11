@@ -34,7 +34,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/consulta")
-@PreAuthorize("hasRole('ENF')")
+@PreAuthorize("hasAnyRole('ENF','ADMIN','MEDIC')")
 public class ConsultaController {
 
     private final ConsultaService consultaService;

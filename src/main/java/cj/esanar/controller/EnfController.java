@@ -35,7 +35,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/enf")
-@PreAuthorize("hasAnyRole('ENF','ADMIN')")
+@PreAuthorize("hasAnyRole('ENF','MEDIC','ADMIN','VISITOR')")
 public class EnfController {
 
     private final PacienteService pacienteServiceImpl;

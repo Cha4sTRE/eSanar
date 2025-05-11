@@ -110,11 +110,20 @@
                 <option value="viudo">Viudo</option>
             </select>
         </div>
-        <div sec:authorize="hasAuthority('UPDATE')">
+
+        <div th:if="${param.isEmpty()}" sec:authorize="hasAuthority('CREATE')">
             <div class="text-center me-3">
                 <button type="submit" class="btn btn-primary">Guardar Paciente</button>
             </div>
         </div>
+
+
+        <div th:if="${!param.isEmpty()}" sec:authorize="hasAuthority('UPDATE')">
+            <div class="text-center me-3">
+                <button type="submit" class="btn btn-primary">Actualizar Paciente</button>
+            </div>
+        </div>
+
 
     </form>
     <div th:if="${!param.isEmpty()}" class="d-flex justify-content-center mt-3"  sec:authorize="hasAuthority('DELETE')">
