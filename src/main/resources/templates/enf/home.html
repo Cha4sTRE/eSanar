@@ -26,7 +26,7 @@
             <div th:if="${!pacientes.isEmpty()}">
                 <div class="row">
                     <div class="col-lg-8">
-                        <form th:replace="loyaut/filtro-pacientes::filtro"></form>
+                        <form th:replace="~{loyaut/filtro-pacientes::filtro}"></form>
                         <div class="table-responsive-md">
                             <table class="table table-hover">
                                 <thead>
@@ -68,7 +68,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <nav th:replace="loyaut/paginator::paginator"></nav>
+                            <nav th:replace="~{loyaut/paginator::paginator}"></nav>
                         </div>
                     </div>
                     <div class="col-lg-4 mt-5">
