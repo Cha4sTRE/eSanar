@@ -2,12 +2,13 @@ package cj.esanar.controller;
 
 
 import cj.esanar.persistence.entity.UserEntity;
+import cj.esanar.persistence.repository.PermissionsRepository;
 import cj.esanar.persistence.repository.RoleRepository;
-import cj.esanar.service.CustomUserDetailsService;
-import cj.esanar.service.UserDetailServiceImpl;
+import cj.esanar.service.implement.CustomUserDetailsService;
+import cj.esanar.service.implement.UserDetailServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,18 +17,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('ADMIN')")
+@AllArgsConstructor
 public class AdminController {
 
-    @Autowired
-    UserDetailServiceImpl userDetailService;
-    @Autowired
+
+    private UserDetailServiceImpl userDetailService;
     private RoleRepository roleRepository;
+    private PermissionsRepository permissionsRepository;
 
     @GetMapping("/")
     public String dashboar(Model model) {
@@ -58,6 +59,13 @@ public class AdminController {
             System.out.println("Errores en la validación: " + errors.getAllErrors());
             return "admin/registro";
         }
+
+        usuario.setEnabled(true);
+        usuario.setAccountNonLocked(true);
+        usuario.setAccountNonExpired(true);
+        usuario.setCredentialsNonExpired(true);
+
+
         userDetailService.saveUser(usuario);
         return "redirect:/admin/";
     }
@@ -65,7 +73,7 @@ public class AdminController {
     @PostMapping("/isEnable")
     @ResponseBody
     public String isEnable(@RequestParam("id") Long id, @RequestParam("enabled") boolean enabled, HttpServletRequest request) {
-        UserEntity user = userDetailService.finById(id);
+        UserEntity user = userDetailService.getById(id);
         System.out.println("el id es: " + id);
         if (user != null) {
             user.setEnabled(enabled);

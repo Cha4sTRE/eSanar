@@ -1,4 +1,4 @@
-package cj.esanar.service;
+package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,9 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class CustomUserDetailsService implements UserDetails {
+
     private final UserEntity user;
-
-
 
     public CustomUserDetailsService(UserEntity userEntity){
         this.user=userEntity;
@@ -28,7 +27,7 @@ public class CustomUserDetailsService implements UserDetails {
                 .forEach(permissionsEntity -> authorities.add(new SimpleGrantedAuthority(permissionsEntity.getName())));
         return authorities;
     }
-
+    public Long getId(){return user.getId();}
     @Override
     public String getPassword() {
         return user.getPassword();

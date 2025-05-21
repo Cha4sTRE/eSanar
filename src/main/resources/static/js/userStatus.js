@@ -7,7 +7,7 @@ function toggleUserStatus(checkbox){
     fetch("isEnable",{
         method:"POST",
         headers:{
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "application/json",
             [csrfHeader]: csrfToken
         },
         body: "id="+id+"&enabled="+enabled,

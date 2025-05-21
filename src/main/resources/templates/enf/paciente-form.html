@@ -1,89 +1,109 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{loyaut/plantilla}">
 <head>
     <meta charset="UTF-8">
-    <title>paciente</title>
+    <title th:text="${!param.isEmpty()?'Paciente '+nombre:'Paciente Nuevo'}"></title>
 </head>
 <body>
 <section class="container mt-5" layout:fragment="content">
+    <div th:if="${nombre != null}">
+        <h1 th:text="'Mas sobre de '+${nombre}" class="mb-4"></h1>
+    </div>
 
     <form th:action="@{/enf/paciente/guardar}" th:object="${paciente}" method="post" class="row g-3">
 
-        <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" id="id" name="id" th:field="*{id}">
+        <th:block th:if="${historiaEspecifica != null and historiaEspecifica.id != null}">
+            <input type="hidden" id="idHistoria" name="idHistoria" th:value="${historiaEspecifica.id}" />
+        </th:block>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="identificacion" class="form-label">Identificación:</label>
-            <input type="number" id="identificacion" th:field="*{identificacion}"  class="form-control" />
+            <input type="number" id="identificacion" th:field="*{identificacion}" required  class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
-            <input type="text" id="tipoDocumento" th:field="*{tipoDocumento}"  class="form-control" />
+            <select id="tipoDocumento" th:field="*{tipoDocumento}" required class="form-select">
+                <option value="Cedula de Ciudadania">Cedula de Ciudadanía</option>
+                <option value="Targeta de identidad">Targeta de Identídad</option>
+                <option value="Cedula de extrangeria">Cedula de Extrangería</option>
+            </select>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" id="nombre" th:field="*{nombre}"  class="form-control" />
+            <input type="text" id="nombre" th:field="*{nombre}" required class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="apellido" class="form-label">Apellido:</label>
-            <input type="text" id="apellido" th:field="*{apellido}"  class="form-control" />
+            <input type="text" id="apellido" th:field="*{apellido}" required  class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="telefono" class="form-label">Teléfono:</label>
-            <input type="text" id="telefono" th:field="*{telefono}"  class="form-control" />
+            <input type="text" id="telefono" th:field="*{telefono}" required  class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="direccion" class="form-label">Dirección:</label>
-            <input type="text" id="direccion" th:field="*{direccion}"  class="form-control" />
+            <input type="text" id="direccion" th:field="*{direccion}" required  class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="barrio" class="form-label">Barrio:</label>
-            <input type="text" id="barrio" th:field="*{barrio}"  class="form-control" />
+            <input type="text" id="barrio" th:field="*{barrio}" required  class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" class="form-control" />
+            <input type="date" name="fechaNacimiento" required id="fechaNacimiento" th:value="${fecha}" class="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="sexo" class="form-label">Sexo:</label>
-            <select id="sexo" th:field="*{sexo}" class="form-select" >
+            <select id="sexo" th:field="*{sexo}" class="form-select" required>
                 <option value="masculino">Masculino</option>
                 <option value="femenino">Femenino</option>
             </select>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="tipoSangre" class="form-label">Tipo de Sangre:</label>
-            <input type="text" id="tipoSangre" th:field="*{tipoSangre}" class="form-control" />
+            <select id="tipoSangre" th:field="*{tipoSangre}" class="form-select" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="correo" class="form-label">Correo:</label>
-            <input type="email" id="correo" th:field="*{correo}" class="form-control" />
+            <input type="email" id="correo" th:field="*{correo}" class="form-control" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="ocupacion" class="form-label">Ocupación:</label>
-            <input type="text" id="ocupacion" th:field="*{ocupacion}" class="form-control" />
+            <input type="text" id="ocupacion" th:field="*{ocupacion}" class="form-control" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="entidad" class="form-label">Entidad:</label>
-            <input type="text" id="entidad" th:field="*{entidad}" class="form-control" />
+            <input type="text" id="entidad" th:field="*{entidad}" class="form-control" required />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <label for="estadoCivil" class="form-label">Estado Civil:</label>
-            <select id="estadoCivil" th:field="*{estadoCivil}" class="form-select" >
+            <select id="estadoCivil" th:field="*{estadoCivil}" class="form-select" required>
                 <option value="soltero">Soltero</option>
                 <option value="casado">Casado</option>
                 <option value="divorciado">Divorciado</option>
@@ -91,11 +111,22 @@
             </select>
         </div>
 
-        <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+        <div th:if="${param.isEmpty()}" sec:authorize="hasAuthority('CREATE')">
+            <div class="text-center me-3">
+                <button type="submit" class="btn btn-primary">Guardar Paciente</button>
+            </div>
         </div>
+
+
+        <div th:if="${!param.isEmpty()}" sec:authorize="hasAuthority('UPDATE')">
+            <div class="text-center me-3">
+                <button type="submit" class="btn btn-primary">Actualizar Paciente</button>
+            </div>
+        </div>
+
+
     </form>
-    <div class="col-12 text-center mt-3">
+    <div th:if="${!param.isEmpty()}" class="d-flex justify-content-center mt-3"  sec:authorize="hasAuthority('DELETE')">
         <a th:href="@{eliminar(id=${paciente.id})}">
             <button class="btn btn-danger">Eliminar Paciente</button>
         </a>

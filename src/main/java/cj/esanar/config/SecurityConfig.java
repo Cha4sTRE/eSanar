@@ -1,8 +1,7 @@
 package cj.esanar.config;
 
 
-import cj.esanar.service.CustomUserDetailsService;
-import cj.esanar.service.UserDetailServiceImpl;
+import cj.esanar.service.implement.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,8 +57,6 @@ public class SecurityConfig {
 
         return daoProvider;
     }
-
-    //obtiene los usuarios de la base de datos
 
 
     @Bean

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{loyaut/plantilla}">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Consulta</title>
+</head>
+<body>
+<section class="container mt-5" layout:fragment="content">
+
+
+    <form th:action="@{/consulta/agregar}" th:object="${consulta}" method="post" class="row g-3">
+
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" id="idHistoria" name="idHistoria" th:value="${historiaPaciente.id}">
+
+        <div class="col-lg-6">
+            <label for="fechaHoraAtencion" class="form-label">Hora y Fecha de Consulta:</label>
+            <input type="datetime-local" id="fechaHoraAtencion" th:value="${hora}" name="fechaHora"  class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="motivoConsulta" class="form-label">Motivo de Consulta:</label>
+            <textarea cols="2" rows="2" id="motivoConsulta" th:field="*{motivoConsulta}"  class="form-control">
+            </textarea>
+        </div>
+        <div class="col-lg-6">
+            <label for="diagnosticoPrincipal" class="form-label">Diagnostico Principal(CIE)</label>
+            <input type="text" id="diagnosticoPrincipal" class="ctw-input form-control" data-ctw-ino="1" th:field="*{diagnosticoPrincipal}">
+            <div class="ctw-window" data-ctw-ino="1"></div>
+        </div>
+        <div class="col-lg-6">
+            <label for="infeccion" class="form-label">Infeccion: </label>
+            <input type="text" id="infeccion" th:field="*{infeccion}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="forma" class="form-label">Forma: </label>
+            <input type="text" id="forma" th:field="*{forma}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="largo" class="form-label">Largo: </label>
+            <input type="number" id="largo" th:field="*{largo}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="ancho" class="form-label">ancho: </label>
+            <input type="number" id="ancho" th:field="*{ancho}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="profundidad" class="form-label">profundidad: </label>
+            <input type="text" id="profundidad" th:field="*{profundidad}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="olor" class="form-label">olor: </label>
+            <input type="text" id="olor" th:field="*{olor}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="bordes" class="form-label">Bordes: </label>
+            <input type="text" id="bordes" th:field="*{bordesHerida}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="exudadoTipo" class="form-label">Tipo de exudado: </label>
+            <input type="text" id="exudadoTipo" th:field="*{exudadoTipo}" class="form-control" />
+        </div>
+        <div class="col-lg-6">
+            <label for="exudadoNivel" class="form-label">Nivel de exudado: </label>
+            <input type="text" id="exudadoNivel" th:field="*{exudadoNivel}" class="form-control" />
+        </div>
+        <div class="col-12 text-center" th:if="${param.historiaId}" sec:authorize="hasAuthority('CREATE')">
+            <button type="submit" class="btn btn-primary">Guardar Consulta</button>
+        </div>
+        <div class="col-12 text-center" th:if="${param.consulta}" sec:authorize="hasAuthority('UPDATE')">
+            <button type="submit" class="btn btn-primary">Actualizar Consulta</button>
+        </div>
+    </form>
+
+</section>
+
+</body>
+</html>

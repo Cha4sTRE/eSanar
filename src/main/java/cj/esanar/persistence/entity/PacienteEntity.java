@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -43,7 +43,10 @@ public class PacienteEntity {
     private String barrio;
 
     @Column(name = "fecha_nacimiento", nullable = false)
-    private String fechaNacimiento;
+    private LocalDate fechaNacimiento;
+
+    @Column(name = "edad", nullable = false)
+    private int edad;
 
     @Column(name = "sexo", nullable = false, length = 10)
     private String sexo;
@@ -63,5 +66,14 @@ public class PacienteEntity {
     @Column(name = "estado_civil", nullable = false, length = 20)
     private String estadoCivil;
 
+    /// Atributo que relaciona la entidad **Paciente** con la entidad **Historia**.
+    /// En la base de datos esta relacion es de **Uno a Uno**, ósea que los pacientes tiene una historia
+    /// y las historias tienen un paciente
+    /// - mappedBy: mapea este **paciente** en el atributo 'paciente' de {@link HistoriaEntity},
+    /// esto genera la llave foránea en la base de datos
+
+
+    @OneToOne(mappedBy = "paciente", orphanRemoval = true,cascade = CascadeType.PERSIST)
+    private HistoriaEntity historiaEntity;
 
 }

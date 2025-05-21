@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{loyaut/plantilla}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Historia de '+${pacienteNombre}"></title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="col-lg-7">
+        <div class="col-md-7 mb-4">
+            <h1 th:text="'Historial de Consultas de ' +${pacienteNombre}" class="mb-3"></h1>
+            <div th:if="${consultas.isEmpty()}">
+                <p>El paciente aún no tiene consultas</p>
+            </div>
+            <a th:href="@{/consulta/nueva(historiaId=${historia.id})}">
+                <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
+            </a>
+        </div>
+        <div th:if="${!consultas.isEmpty()}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive-md">
+                        <form th:replace="loyaut/filtro-consultas::filtro"></form>
+                        <table class="table table-hover">
+                            <thead>
+                            <th>id</th>
+                            <th>Fecha</th>
+                            <th>Motivo</th>
+                            <th>Editar/Exportar</th>
+                            </thead>
+                            <tbody>
+                            <div th:if="${!consultas.isEmpty()}">
+                                <tr th:each="consulta:${consultas}">
+                                    <td th:text="${consulta.id}"></td>
+                                    <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
+                                    <td th:text="${consulta.motivoConsulta}"></td>
+                                    <td class="d-flex justify-content-start">
+                                        <a th:href="@{/consulta/historia/}+@{${consulta.historiaClinica.id}(consulta=${consulta.id})}">
+                                            <button class="btn me-1" style="background-color: lightgreen">
+                                                <i class="bi bi-pen"></i>
+                                            </button>
+                                        </a>
+                                        <a th:href="@{/consulta/exportarInforme(consulta=${consulta.id})}">
+                                            <button type="button" class="btn btn-primary mb-3">
+                                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                        <nav th:replace="~{loyaut/paginator::paginator}"></nav>
+                        <a th:href="@{/enf/}" class="btn btn-primary">regresar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

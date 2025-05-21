@@ -1,27 +1,25 @@
-package cj.esanar.service;
+package cj.esanar.service.implement;
 
 import cj.esanar.persistence.entity.UserEntity;
 import cj.esanar.persistence.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
+import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,12 +36,18 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public List<UserEntity> getAllUsers() {
         return (List<UserEntity>) userRepository.findAll();
     }
-    public UserEntity finById(Long id) {
+    public UserEntity getById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
     public void saveUser(UserEntity userEntity) {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userRepository.save(userEntity);
+    }
+    public void findById(Long id) {
+        userRepository.findById(id).orElse(null);
+    }
+    public void deleteUser(UserEntity userEntity) {
+        userRepository.deleteById(userEntity.getId());
     }
 
 }

@@ -1,7 +1,6 @@
-package cj.esanar.config.converter;
+package cj.esanar.config;
 
 import cj.esanar.persistence.entity.ERole;
-import cj.esanar.persistence.entity.RoleEntity;
 import cj.esanar.persistence.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
