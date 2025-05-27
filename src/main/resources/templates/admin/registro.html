@@ -7,10 +7,10 @@
     <title>Nuevo Usuario</title>
 </head>
 <body>
-<section class="container lg-5" layout:fragment="content">
+<section layout:fragment="content">
 
     <form th:action="@{guardarRegistro}" th:object="${usuario}" method="post" class="row g-3 p-4 d-flex justify-content-center">
-        <div class="card col-md-6 p-3 m-3">
+        <div class="card col-lg-6 p-3 m-3">
             <div>
                 <label for="username" class="form-label">nombre:</label>
                 <input type="text" id="username" class="form-control" th:field="*{username}"/>
