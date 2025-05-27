@@ -8,7 +8,7 @@
     <title th:text="${!param.isEmpty()?'Paciente '+nombre:'Paciente Nuevo'}"></title>
 </head>
 <body>
-<section class="container mt-5" layout:fragment="content">
+<section layout:fragment="content">
     <div th:if="${nombre != null}">
         <h1 th:text="'Mas sobre de '+${nombre}" class="mb-4"></h1>
     </div>
@@ -123,7 +123,6 @@
                 <button type="submit" class="btn btn-primary">Actualizar Paciente</button>
             </div>
         </div>
-
 
     </form>
     <div th:if="${!param.isEmpty()}" class="d-flex justify-content-center mt-3"  sec:authorize="hasAuthority('DELETE')">

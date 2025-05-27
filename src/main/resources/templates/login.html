@@ -7,7 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #f8f9fa;">
-<div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 1rem;">
+<div class="card shadow m-3 p-4" style="width: 100%; max-width: 400px; border-radius: 1rem;">
     <h2 class="text-center mb-4">Iniciar Sesión</h2>
     <form th:action="@{/login}" method="post">
         <div th:if="${param.error}">
