@@ -9,32 +9,27 @@
 <body>
 
 <section layout:fragment="content">
-
-    <div class="px-4 py-5 my-5 d-md-flex justify-content-around">
-        <div class=" mt-5">
-            <div>
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <!-- Texto -->
+            <div class="col-12 col-md-6 mb-4 mb-md-0">
                 <h1 class="display-5 fw-bold">Bienvenido a Enf-Software</h1>
-            </div>
-
-            <div class="mt-2">
-                <h3>
-                    Portal Web para<br>la Clinica de Heridas Enf-Sanar
+                <h3 class="mt-3">
+                    Portal Web para<br>la Clínica de Heridas Enf-Sanar
                 </h3>
-                <div class="text-center mt-4" sec:authorize="!isAuthenticated()">
-                    <a class="" th:href="@{/login}">
+                <div class="text-center text-md-start mt-4" sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">
                         <button class="btn btn-lg" style="background-color: lightgreen">Ingresar</button>
                     </a>
                 </div>
             </div>
-        </div>
-        <div>
-            <img th:src="@{/images/LogoImageWEB.png}"
-                 class="img-fluid" width="440px" alt="logo">
-        </div>
 
+            <!-- Imagen -->
+            <div class="col-12 col-md-6 text-center">
+                <img th:src="@{/images/LogoImageWEB.png}" class="img-fluid" alt="logo" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
     </div>
-    </div>
-
 </section>
 </body>
 </html>

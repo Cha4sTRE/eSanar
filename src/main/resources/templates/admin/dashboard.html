@@ -9,64 +9,79 @@
 <body>
 
 <section layout:fragment="content">
-    <h1 class="mt-3 mb-3" th:text="Bienvenido+' '+${usuarioAuth.getUsername()}"></h1>
+    <h1 class="mt-3 mb-3 text-center text-md-start" th:text="'Bienvenido ' + ${usuarioAuth.getUsername()}"></h1>
+
     <div class="mt-3">
-        <h4>Usuarios Actuales</h4>
-        <div class="row">
-            <div class="col-md-8">
+        <h4 class="text-center text-md-start">Usuarios Actuales</h4>
+
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-10 col-lg-8">
+
+                <!-- Alerta -->
                 <div class="alert alert-success" th:if="${param.exito}">Registro exitoso</div>
-                <div class="table-responsive-md">
-                    <table class="table table-striped border rounded-1">
-                        <thead>
+
+                <!-- Tabla responsive -->
+                    <table class="table table-hover">
+                        <thead class="table-light">
                         <tr>
-                            <th>username</th>
-                            <th>correo</th>
-                            <th>telefono</th>
+                            <th>Username</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
                             <th>Rol</th>
                             <th>Permisos</th>
                             <th>Habilitar</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="user:${users}">
-                            <th th:text="${user.username}"></th>
-                            <th th:text="${user.email}"></th>
-                            <th th:text="${user.telefono}"></th>
-                            <th th:each="role:${user.roles}">
-                                <div th:each="rol:${listaRoles}">
-                                    <div th:if="${role.id==rol.id}">
-                                        <span th:text="${rol.name}"></span>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.telefono}"></td>
+                            <td>
+                                <div th:each="role : ${user.roles}">
+                                    <div th:each="rol : ${listaRoles}">
+                                        <span th:if="${role.id == rol.id}" th:text="${rol.name}"></span>
                                     </div>
                                 </div>
-                            </th>
-                            <th th:each="role:${user.roles}">
-                                <div th:each="rol:${listaRoles}">
-                                    <div th:if="${role.id==rol.id}">
-                                        <ul th:each="permisos:${rol.listaPermisos}" class="list-unstyled d-inline">
-                                            <li th:text="${permisos.name}"></li>
-                                        </ul>
+                            </td>
+                            <td>
+                                <div th:each="role : ${user.roles}">
+                                    <div th:each="rol : ${listaRoles}">
+                                        <div th:if="${role.id == rol.id}">
+                                            <ul class="list-unstyled mb-0">
+                                                <li th:each="permiso : ${rol.listaPermisos}" th:text="${permiso.name}"></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <div class="form-check form-switch d-flex justify-content-center">
-                                    <input type="checkbox" th:checked="${user.enabled}"
+                                    <input type="checkbox"
+                                           th:checked="${user.enabled}"
                                            th:attr="data-id=${user.id}"
                                            onchange="toggleUserStatus(this)"
-                                           class="form-check-input" role="switch"
-                                           name="enabled" id="enabled">
+                                           class="form-check-input"
+                                           role="switch"
+                                           name="enabled"
+                                           id="enabled">
                                 </div>
-                            </th>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
+
+
+                <!-- Botón nuevo usuario -->
+                <div class="mt-3">
+                    <a th:href="@{nuevoRegistro}">
+                        <button class="btn" style="background-color: lightgreen">Nuevo Usuario</button>
+                    </a>
                 </div>
-                <a th:href="@{nuevoRegistro}">
-                    <button class="btn" style="background-color: lightgreen">Nuevo Usuario</button>
-                </a>
             </div>
         </div>
     </div>
+
 </section>
 
 </body>

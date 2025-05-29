@@ -10,58 +10,67 @@
 <body>
 
 <section layout:fragment="content">
-    <div class="col-lg-7">
-        <div class="col-md-7 mb-4">
-            <h1 th:text="'Historial de Consultas de ' +${pacienteNombre}" class="mb-3"></h1>
-            <div th:if="${consultas.isEmpty()}">
-                <p>El paciente aún no tiene consultas</p>
-            </div>
-            <a th:href="@{/consulta/nueva(historiaId=${historia.id})}">
-                <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
-            </a>
-        </div>
-        <div th:if="${!consultas.isEmpty()}">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-responsive-md">
+    <div class="row">
+        <div class="col-12 col-lg-7">
+            <div class="mb-4">
+                <h1 th:text="'Historial de Consultas de ' + ${pacienteNombre}" class="mb-3"></h1>
+
+                <div th:if="${consultas.isEmpty()}">
+                    <p>El paciente aún no tiene consultas.</p>
+                </div>
+
+                <a th:href="@{/consulta/nueva(historiaId=${historia.id})}" class="mb-3 d-inline-block">
+                    <button class="btn" style="background-color: lightgreen">Nueva Consulta</button>
+                </a>
+
+                <div th:if="${!consultas.isEmpty()}">
+
+                        <!-- Filtro de consultas -->
                         <form th:replace="loyaut/filtro-consultas::filtro"></form>
-                        <table class="table table-hover">
-                            <thead>
-                            <th>id</th>
-                            <th>Fecha</th>
-                            <th>Motivo</th>
-                            <th>Editar/Exportar</th>
+
+                        <!-- Tabla de consultas -->
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Fecha</th>
+                                <th>Motivo</th>
+                                <th>Acciones</th>
+                            </tr>
                             </thead>
                             <tbody>
-                            <div th:if="${!consultas.isEmpty()}">
-                                <tr th:each="consulta:${consultas}">
-                                    <td th:text="${consulta.id}"></td>
-                                    <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
-                                    <td th:text="${consulta.motivoConsulta}"></td>
-                                    <td class="d-flex justify-content-start">
+                            <tr th:each="consulta : ${consultas}">
+                                <td th:text="${consulta.id}"></td>
+                                <td th:text="${consulta.fechaHoraAtencion.format(formatoHora)}"></td>
+                                <td th:text="${consulta.motivoConsulta}"></td>
+                                <td>
+                                    <div class="d-flex flex-wrap gap-2">
                                         <a th:href="@{/consulta/historia/}+@{${consulta.historiaClinica.id}(consulta=${consulta.id})}">
-                                            <button class="btn me-1" style="background-color: lightgreen">
+                                            <button class="btn" style="background-color: lightgreen" title="Editar">
                                                 <i class="bi bi-pen"></i>
                                             </button>
                                         </a>
                                         <a th:href="@{/consulta/exportarInforme(consulta=${consulta.id})}">
-                                            <button type="button" class="btn btn-primary mb-3">
+                                            <button type="button" class="btn btn-primary" title="Exportar PDF">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i>
                                             </button>
                                         </a>
-                                    </td>
-                                </tr>
-                            </div>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
+
+                        <!-- Paginador -->
                         <nav th:replace="~{loyaut/paginator::paginator}"></nav>
-                        <a th:href="@{/enf/}" class="btn btn-primary">regresar</a>
-                    </div>
+
+                        <!-- Botón de regreso -->
+                        <a th:href="@{/enf/}" class="btn btn-secondary mt-3">Regresar</a>
+
                 </div>
             </div>
         </div>
     </div>
-
 </section>
 
 </body>
